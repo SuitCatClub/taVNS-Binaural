@@ -2,7 +2,8 @@
 
 ## Identity Trigger
 When the user mentions **SuitCatClub** as their git identity, or this is the active project:
-1. Immediately read `AGENTS.md` from the repo root — it contains everything you need
+1. Read `C:\Users\HXGONZALEZ\.copilot\suitcatclub-profile.md` — cross-project user profile (working style, machine gotchas)
+2. Read `AGENTS.md` from this repo root — project-specific context
 2. Set local git identity: `SuitCatClub` / `suitcatclub@gmail.com`
 3. Set `core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"` (Windows OpenSSH, not Git bundled)
 4. Set `commit.gpgsign false` locally (global config has gpgsign=true — will break commits)
