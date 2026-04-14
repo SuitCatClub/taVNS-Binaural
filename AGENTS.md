@@ -108,7 +108,7 @@ Full annotated bibliography: `.planning/research/REFERENCES.md` (41 resolved ref
 | 9 | Documentation | Not started | Build guide, safety docs, clinical refs, GitHub release |
 
 Current phase: check `.planning/STATE.md`
-## 11. Workflow Commands
+## 12. Workflow Commands
 
 ```
 gsd-plan-phase N     → Plan phase N (creates PLAN.md in .planning/phases/N/)
