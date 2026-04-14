@@ -1,0 +1,15 @@
+{
+  "mode": "interactive",
+  "granularity": "fine",
+  "parallelization": true,
+  "commit_docs": true,
+  "model_profile": "quality",
+  "model_override": "claude-opus-4.6",
+  "workflow": {
+    "research": true,
+    "plan_check": true,
+    "verifier": true,
+    "nyquist_validation": true,
+    "auto_advance": false
+  }
+}
