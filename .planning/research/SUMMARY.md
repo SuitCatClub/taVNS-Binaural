@@ -241,7 +241,7 @@ Research strongly supports **6 phases** with a hardware-then-firmware-then-integ
 - **ArduinoJson:** GitHub API — release 7.4.3
 - **KiCad:** GitHub API — release 9.0.8
 - **NeuroKit2:** PyPI API — release 0.2.13, GitHub HRV module structure
-- **McCreery et al.** (2010): Charge density limits for neural stimulation — 30 µC/cm²
+- **McCreery et al.** (1990): Charge density limits for neural stimulation — 30 µC/cm² [year corrected from 2010 per citation audit]
 - **Shannon** (1992): k-factor model for stimulation tissue damage
 - **IEC 60601-1:2005+AMD1:2012:** Patient isolation, leakage current limits
 - **ANSI/AAMI NS4:2024:** TENS device output limits

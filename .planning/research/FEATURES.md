@@ -37,7 +37,7 @@ Features users and researchers **expect**. Missing any of these = device is unsa
 |-----------|-------|
 | **Why Expected** | Net DC current causes tissue damage (electrolysis, pH shift, electrode corrosion). Every clinical taVNS device uses charge-balanced output. This is the #1 safety requirement. |
 | **Complexity** | Medium — Requires symmetric biphasic waveform generation with matched anodic/cathodic phases. H-bridge or dual-supply output stage. DC-blocking capacitor as hardware backup. |
-| **Evidence** | HIGH — McCreery et al. (2010), Shannon (1992) charge density limits. IEC 60601-2-10. |
+| **Evidence** | HIGH — McCreery et al. (1990), Shannon (1992) charge density limits. IEC 60601-2-10. |
 | **Dependencies** | Requires: TS-5 (galvanic isolation), TS-4 (DC-blocking hardware) |
 | **Implementation Notes** | Symmetric biphasic (equal amplitude, equal duration, opposite polarity) is simplest and safest. Asymmetric biphasic (different amplitudes, adjusted durations for equal charge) is acceptable but adds complexity with no clinical benefit for this application. |
 
@@ -373,7 +373,7 @@ PRESETS & POLISH (requires all above)
 | Stavrakis et al. (2020) "RESET-AF" JACC | RCT | HIGH | 20 Hz, 200 µs, tragus, 1h daily. Foundational cardiac taVNS parameters. |
 | Stavrakis et al. (2023) "TREAT-AF" follow-up | RCT | HIGH | Confirmed RESET-AF parameters in larger cohort. |
 | Peuker & Filler (2002) Clin Anat | Anatomical study | HIGH | Cymba conchae ABVN innervation density. Foundational electrode placement rationale. |
-| McCreery et al. (2010) IEEE TBME | Safety limits study | HIGH | Charge density limits for neural stimulation. 30 µC/cm² per phase. |
+| McCreery et al. (1990) IEEE TBME | Safety limits study | HIGH | Charge density limits for neural stimulation. 30 µC/cm² per phase. |
 | Shannon (1992) IEEE TBME | Safety model | HIGH | k-factor model for stimulation-induced tissue damage. |
 | Task Force ESC/NASPE (1996) Circulation | HRV standards | HIGH | RMSSD, SDNN, LF/HF definitions and measurement standards. |
 | Laborde et al. (2017) Front Psychol | HRV review | HIGH | Practical guidelines for HRV measurement in research. |

@@ -823,7 +823,7 @@ Before any human use (even developer self-testing):
 
 | Topic | Source | Confidence |
 |-------|--------|------------|
-| DC offset tissue damage mechanism | McCreery et al. (2010), Shannon (1992) charge density limits — foundational neurostimulation safety literature | HIGH |
+| DC offset tissue damage mechanism | McCreery et al. (1990), Shannon (1992) charge density limits — foundational neurostimulation safety literature | HIGH |
 | Howland current pump stability | Pease (1992) "Improve Howland current pump" App Note AN-1515, Ti Application Report SBAA290 | HIGH |
 | MCP4922 DAC behavior | Microchip MCP4922 datasheet (DS21897) — LDAC timing, glitch energy specification | HIGH |
 | ESP32-S3 hardware timer, MCPWM | Espressif ESP32-S3 Technical Reference Manual | HIGH |
