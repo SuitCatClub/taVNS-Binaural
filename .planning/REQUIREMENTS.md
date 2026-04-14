@@ -52,9 +52,9 @@
 - [ ] **FW-07**: Real-time charge density calculation — compute charge/phase (I × pulse_width in µC) and charge density (µC/cm², using configurable electrode area parameter); warn at >50% McCreery limit, hard-block at >80%; display via BLE notify
 - [ ] **FW-08**: Session presets stored in ESP32 NVS — minimum presets:
   - **"Insomnia Standard"**: 25Hz, 200µs, 2.0mA, 30s ON/30s OFF, 30min, 20ms stagger
-  - **"RESET-AF Replication"**: 20Hz, 200µs, threshold (1.5mA default), continuous, 60min, synchronous
-  - **"Anti-Inflammatory / Chronic Pain"**: 10Hz, 250µs, 1.5mA, 30s ON/30s OFF, 60min, 20ms stagger — targets vagal anti-inflammatory reflex (α7 nAChR pathway)
-  - **"Dysautonomia / hEDS"**: 25Hz, 200µs, 1.0mA, 30s ON/30s OFF, 30min, 20ms stagger — targets sympathetic overdrive in POTS/hEDS; ⚠️ experimental, low clinical evidence, labeled accordingly
+  - **"RESET-AF Replication"**: 20Hz, 200µs, threshold (1.5mA default), continuous, 60min, **unilateral left ear (Channel A only)** — per Stavrakis et al. RESET-AF (2020) and TREAT-AF (2023); bilateral not validated for AF protocol
+  - **"Anti-Inflammatory / Chronic Pain"**: 25Hz, 250µs, 1.5mA, 30s ON/30s OFF, 60min, 20ms stagger — targets vagal anti-inflammatory reflex (α7 nAChR pathway); **corrected from 10Hz** — no published human taVNS evidence at 10Hz; Lerman et al. (2016) anti-inflammatory data at 25Hz
+  - **"Dysautonomia / hEDS"**: 25Hz, 200µs, **ramp 0.5mA → 1.0mA max**, 30s ON/30s OFF, 30min, 20ms stagger — targets sympathetic overdrive in POTS/hEDS; ⚠️ **THEORETICAL ONLY — zero published clinical evidence for taVNS in POTS or hEDS**; mandatory UI warning + tolerance titration required; contraindicated with digoxin or active cardiac involvement
   - **"Exploration"**: all parameters user-defined
 - [ ] **FW-09**: FreeRTOS task architecture — Core 1: stimulation ISR (highest priority, hardware timer) + impedance monitor; Core 0: BLE stack (NimBLE ≥2.4.0) + session manager + flash logger; stimulation ISR must never be preempted by BLE
 
