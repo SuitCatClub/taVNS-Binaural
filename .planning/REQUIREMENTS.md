@@ -101,15 +101,49 @@
 
 ## Traceability
 
-| Req ID | Phase | Roadmap Phase |
-|--------|-------|---------------|
-| SAFE-01 to SAFE-10 | All | Phase 1 (TENS) + Phase 2 (Firmware) + Phase 3 (PCB) |
-| HW-01 to HW-03 | TENS Hack | Phase 1 |
-| HW-04 to HW-11 | Custom PCB | Phase 3 |
-| FW-01 to FW-09 | Stimulation Engine | Phase 2 |
-| BLE-01 to BLE-04 | BLE Interface | Phase 4 |
-| DATA-01 to DATA-02 | Data | Phase 4 |
-| DOC-01 to DOC-05 | Documentation | Phase 5 |
+| Req ID | Requirement Summary | Phase | Status |
+|--------|---------------------|-------|--------|
+| SAFE-01 | Charge-balanced biphasic waveform (firmware + hardware) | Phase 2 | Pending |
+| SAFE-02 | Series DC-blocking capacitor per electrode output | Phase 4 | Pending |
+| SAFE-03 | Hardware overcurrent cutoff at 6mA (LM393 latch) | Phase 4 | Pending |
+| SAFE-04 | Galvanic isolation (B0515D-1WR3 + Si8621/Si8622) | Phase 4 | Pending |
+| SAFE-05 | USB charging interlock — no stim while USB connected | Phase 4 | Pending |
+| SAFE-06 | Firmware parameter safety bounds (non-overridable) | Phase 3 | Pending |
+| SAFE-07 | "NOT A MEDICAL DEVICE" disclaimer on all surfaces | Phase 9 | Pending |
+| SAFE-08 | Hardware watchdog timer (100ms) | Phase 3 | Pending |
+| SAFE-09 | Fault-safe default state (zero output on any fault) | Phase 3 | Pending |
+| SAFE-10 | Emergency stop physical button (not software-mediated) | Phase 4 | Pending |
+| HW-01 | TENS modification for constant-current 0.5–5mA output | Phase 1 | Pending |
+| HW-02 | DC-blocking + galvanic isolation on TENS modification | Phase 1 | Pending |
+| HW-03 | Cymba conchae electrode adapter (<5kΩ impedance) | Phase 1 | Pending |
+| HW-04 | ESP32-S3 MCU (dual-core 240MHz, BLE 5.0) | Phase 8 | Pending |
+| HW-05 | MCP4922 dual 12-bit SPI DAC | Phase 8 | Pending |
+| HW-06 | Dual V-to-I output stages (OPA388 + Rsense feedback) | Phase 8 | Pending |
+| HW-07 | H-bridge per channel for biphasic polarity reversal | Phase 8 | Pending |
+| HW-08 | Isolated power: B0515D-1WR3 → ±15V analog rail | Phase 8 | Pending |
+| HW-09 | LiPo management: TP4056 + ME6211 LDO (NOT AMS1117) | Phase 8 | Pending |
+| HW-10 | Oscilloscope test point (buffered, external access) | Phase 8 | Pending |
+| HW-11 | KiCad 9.x schematic + PCB layout (GPL v3, JLCPCB-ready) | Phase 8 | Pending |
+| FW-01 | Charge-balanced biphasic waveform via hardware timer ISR | Phase 2 | Pending |
+| FW-02 | Configurable parameters per channel | Phase 2 | Pending |
+| FW-03 | Soft-start current ramp (0→target, configurable period) | Phase 3 | Pending |
+| FW-04 | Binaural asynchronous stagger (0–40ms, default 20ms) | Phase 5 | Pending |
+| FW-05 | Independent per-channel current (L and R set separately) | Phase 5 | Pending |
+| FW-06 | Real-time electrode impedance sensing (pre + during) | Phase 5 | Pending |
+| FW-07 | Real-time charge density calculation + safety limits | Phase 5 | Pending |
+| FW-08 | Session presets (6 presets stored in ESP32 NVS) | Phase 7 | Pending |
+| FW-09 | FreeRTOS dual-core architecture (Core 1=stim, Core 0=BLE) | Phase 2 | Pending |
+| BLE-01 | BLE GATT peripheral server (stim control characteristics) | Phase 6 | Pending |
+| BLE-02 | BLE central client for Polar H10 HRS (RR interval logging) | Phase 6 | Pending |
+| BLE-03 | Post-session HRV report (RMSSD, pNN50, LF/HF, SDNN) | Phase 6 | Pending |
+| BLE-04 | OTA firmware update via BLE DFU (dual partition + rollback) | Phase 6 | Pending |
+| DATA-01 | Session logging to LittleFS (params, impedance, HRV, faults) | Phase 7 | Pending |
+| DATA-02 | Open data export (CSV/JSON + Python NeuroKit2 script) | Phase 7 | Pending |
+| DOC-01 | Clinical evidence summary + golden parameters table | Phase 9 | Pending |
+| DOC-02 | Safety & contraindications document | Phase 9 | Pending |
+| DOC-03 | Complete assembly guide (TENS hack + custom PCB) | Phase 9 | Pending |
+| DOC-04 | HRV verification protocol (baseline/session/recovery) | Phase 9 | Pending |
+| DOC-05 | GitHub release (firmware, KiCad, BOM, Gerbers, docs) | Phase 9 | Pending |
 
 ---
 
