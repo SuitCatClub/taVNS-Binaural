@@ -1,7 +1,8 @@
 # taVNS Clinical & Technical Reference Library
 
 > Living bibliography for the taVNS-Binaural open-source project.
-> Last updated: 2025-07-14
+> Last updated: 2025-07-14 (supplement: +8 refs from PRESETS.md)
+> 41 refs resolved (REF-001 through REF-041), 17 unresolved
 > DOI links verified against training data (cutoff ~2024). URLs flagged with ⚠️ need manual verification.
 > All PubMed search URLs are stable and will find the paper even if PMID changes.
 
@@ -41,6 +42,20 @@ Human RCTs, pilot studies, and parameter optimization studies for transcutaneous
 | REF-005 | Stavrakis S, Stoner JA, Humphrey MB, et al. | TREAT AF (Transcutaneous Electrical Vagus Nerve Stimulation to Suppress Atrial Fibrillation): A Randomized Clinical Trial | JACC Clin Electrophysiol | 2020 | [DOI: 10.1016/j.jacep.2019.11.008](https://doi.org/10.1016/j.jacep.2019.11.008) ⚠️ VERIFY | RCT — HIGH | FEATURES, SUMMARY |
 | REF-006 | Yakunina N, Kim SS, Nam EC | Optimization of Transcutaneous Vagus Nerve Stimulation Using Functional MRI | Neuromodulation | 2017 | [DOI: 10.1111/ner.12541](https://doi.org/10.1111/ner.12541) ⚠️ VERIFY | fMRI study — MEDIUM | PITFALLS |
 | REF-007 | Badran BW, Mithoefer OJ, Summer CE, et al. | Short trains of transcutaneous auricular vagus nerve stimulation (taVNS) have parameter-specific effects on heart rate | Brain Stimul | 2018 | [DOI: 10.1016/j.brs.2018.04.004](https://doi.org/10.1016/j.brs.2018.04.004) ⚠️ VERIFY | Parameter optimization — MEDIUM | PITFALLS |
+| REF-034 | Lerman I, Hauger R, Sorkin L, et al. | Noninvasive transcutaneous vagus nerve stimulation decreases whole blood culture-derived cytokines and chemokines: a randomized, blinded, healthy control pilot trial | Mol Med | 2016 | [DOI: 10.2119/molmed.2016.00066](https://doi.org/10.2119/molmed.2016.00066) ⚠️ VERIFY | Pilot RCT (healthy volunteers, N≈20) — MEDIUM | PRESETS (anti-inflammatory 25 Hz anchor) |
+| REF-035 | Bretherton B, Atkinson L, Murray A, et al. | Effects of transcutaneous vagus nerve stimulation in individuals aged 55 years or above: potential benefits of daily stimulation | Aging | 2019 | [DOI: 10.18632/aging.102074](https://doi.org/10.18632/aging.102074) ⚠️ VERIFY | Pilot RCT (elderly, N=29) — MEDIUM | PRESETS (insomnia, dysautonomia) |
+| REF-036 | Fang J, Rong P, Hong Y, et al. | Transcutaneous vagus nerve stimulation modulates default mode network in major depressive disorder | Biol Psychiatry | 2016 | [DOI: 10.1016/j.biopsych.2015.03.025](https://doi.org/10.1016/j.biopsych.2015.03.025) ⚠️ VERIFY | RCT (depression, N=160; sleep as secondary) — MEDIUM | PRESETS (insomnia secondary outcome) |
+| REF-037 | Napadow V, Edwards RR, Cahalan CM, et al. | Evoked pain analgesia in chronic pelvic pain patients using respiratory-gated auricular vagal afferent nerve stimulation | Pain Med | 2012 | [DOI: 10.1111/j.1526-4637.2012.01385.x](https://doi.org/10.1111/j.1526-4637.2012.01385.x) ⚠️ VERIFY | fMRI pilot (pain, N≈15) — MEDIUM | PRESETS (pain modulation) |
+| REF-039 | Yap JYY, Keatch C, Lambert E, et al. | Critical review of transcutaneous vagus nerve stimulation: Challenges for translation to clinical practice | Front Neurosci | 2020 | [DOI: 10.3389/fnins.2020.00284](https://doi.org/10.3389/fnins.2020.00284) ⚠️ VERIFY | Narrative review — MEDIUM | PRESETS (sources) |
+| REF-041 | Straube A, Ellrich J, Eren O, Blum B, Ruscheweyh R | Treatment of chronic migraine with transcutaneous stimulation of the auricular branch of the vagal nerve (auricular t-VNS): a randomized, monocentric clinical trial | J Headache Pain | 2015 | [DOI: 10.1186/s10194-015-0543-3](https://doi.org/10.1186/s10194-015-0543-3) ⚠️ VERIFY | Small RCT (migraine, N≈46) — MEDIUM | PRESETS (pain) |
+
+**Notes (new entries):**
+- **REF-034** (Lerman 2016) is the **critical anchor** for the 25 Hz anti-inflammatory frequency correction in PRESETS.md. This is the only published study demonstrating taVNS-specific anti-inflammatory effects (reduced TNF-α) and it used **25 Hz at the cymba conchae**, not the 10 Hz specified in the original FW-08 draft. Journal listed as "Mol Med" in PRESETS.md — DOI may resolve to J Neuroimmunol or Bioelectronic Medicine instead; verify.
+- **REF-035** (Bretherton 2019) provides pilot-level evidence for taVNS autonomic benefit in older adults (improved HRV). Used tragus stimulation at very low intensity (200 µA). Relevant to both insomnia (sleep quality trends) and dysautonomia (autonomic balance) presets.
+- **REF-036** (Fang 2016) is a well-known taVNS depression RCT from a Chinese group. Sleep improvement was a secondary outcome. Parameters: left cymba conchae, 20 Hz / 4 Hz alternating, 1 mA, 30 min, 4 weeks.
+- **REF-037** (Napadow 2012) is the primary fMRI evidence that auricular VNS modulates central pain-processing circuits (anterior insula, ACC). Note: PRESETS.md table says "fibromyalgia" while sources section says "chronic pelvic pain" — exact population should be verified.
+- **REF-039** (Yap 2020) is a comprehensive narrative review covering parameter selection challenges, highlighting the lack of standardized protocols across taVNS studies.
+- **REF-041** (Straube 2015) is a small RCT testing taVNS for chronic migraine with both 1 Hz and 25 Hz arms.
 
 ### ⚠️ CRITICAL DISCREPANCY: "RESET-AF" Trial Name
 
@@ -76,8 +91,11 @@ Only included because they establish the mechanistic basis for vagus nerve stimu
 |----|---------|-------|---------|------|-----|----------------|----------|
 | REF-002 | Tracey KJ | The inflammatory reflex | Nature | 2002 | See Section A | Review — HIGH | REQUIREMENTS |
 | REF-003 | Tracey KJ | Physiology and immunology of the cholinergic antiinflammatory pathway | J Clin Invest | 2007 | See Section A | Review — HIGH | REQUIREMENTS |
+| REF-040 | Koopman FA, Chavan SS, Miljko S, et al. | Vagus nerve stimulation inhibits cytokine production and attenuates disease severity in rheumatoid arthritis | PNAS | 2016 | [DOI: 10.1073/pnas.1605635113](https://doi.org/10.1073/pnas.1605635113) ⚠️ VERIFY | Open-label pilot (implanted VNS, RA, N=17) — HIGH | PRESETS (anti-inflammatory, implanted VNS bridge) |
 
 **Note:** REF-002 and REF-003 appear in both Section A and Section C because they bridge foundational neuroscience and implanted VNS rationale. Tracey's work on the cholinergic anti-inflammatory pathway via the vagus nerve is the mechanistic basis for both implanted VNS and transcutaneous taVNS approaches.
+
+**Note:** REF-040 (Koopman 2016) is an implanted cervical VNS study, NOT auricular taVNS. It demonstrated TNF-α reduction and DAS28 improvement in rheumatoid arthritis using implanted VNS. Included here because it is cited in PRESETS.md as mechanistic precedent for the anti-inflammatory pathway — but the modality differs from auricular taVNS.
 
 ---
 
@@ -88,12 +106,10 @@ Only included because they establish the mechanistic basis for vagus nerve stimu
 | ID | Authors | Title | Journal | Year | URL | Evidence Level | Cited In |
 |----|---------|-------|---------|------|-----|----------------|----------|
 | REF-008 | — (Nuerisym case reports) | taVNS for insomnia — bedtime use case reports | — | ~2023-2024 | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=transcutaneous+auricular+vagus+nerve+stimulation+insomnia) | Case series — LOW | FEATURES, PROJECT |
+| REF-035 | Bretherton B, et al. | Effects of taVNS in individuals aged 55+: potential benefits of daily stimulation | Aging | 2019 | See Section B | Pilot RCT — MEDIUM (sleep as secondary) | PRESETS |
+| REF-036 | Fang J, et al. | taVNS modulates default mode network in major depressive disorder | Biol Psychiatry | 2016 | See Section B | RCT — MEDIUM (sleep as secondary outcome) | PRESETS |
 
-**⚠️ GAP: No specific insomnia taVNS RCT is cited in the source files.** The golden parameters for insomnia (25 Hz, 200µs, 30s ON/OFF, 30 min) are extrapolated from autonomic/cardiac taVNS trials. FEATURES.md explicitly acknowledges: *"For insomnia specifically, the evidence base is smaller (mostly pilot studies and case series, not large RCTs). The parameters are extrapolated from autonomic/cardiac trials because the mechanism (parasympathetic enhancement via vagal afferents → NTS → dorsal motor nucleus) is the same."*
-
-**Recommended additional references (not cited in source files but relevant):**
-- Search: [taVNS insomnia RCT on PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=transcutaneous+auricular+vagus+nerve+stimulation+insomnia+randomized)
-- Search: [taVNS sleep quality on PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=taVNS+sleep+quality+randomized+controlled+trial)
+**⚠️ GAP PARTIALLY ADDRESSED:** PRESETS.md identifies several additional insomnia-specific taVNS studies (Jiao et al. ~2020, Li et al. 2019–2021, Zhao et al. 2019–2020) but these remain LOW confidence — see "Missing / Unresolved References" section. REF-035 (Bretherton) and REF-036 (Fang) provide pilot-level evidence with sleep improvement as a secondary endpoint. The golden parameters for insomnia (25 Hz, 200µs, 30s ON/OFF, 30 min) remain primarily extrapolated from autonomic/cardiac taVNS trials.
 
 ### D2. Chronic Pain / Anti-inflammatory
 
@@ -101,14 +117,29 @@ Only included because they establish the mechanistic basis for vagus nerve stimu
 |----|---------|-------|---------|------|-----|----------------|----------|
 | REF-002 | Tracey KJ | The inflammatory reflex | Nature | 2002 | See Section A | Mechanistic review — HIGH | REQUIREMENTS |
 | REF-003 | Tracey KJ | Cholinergic antiinflammatory pathway | J Clin Invest | 2007 | See Section A | Mechanistic review — HIGH | REQUIREMENTS |
+| REF-034 | Lerman I, et al. | taVNS decreases whole blood culture-derived cytokines and chemokines | Mol Med | 2016 | See Section B | Pilot RCT — MEDIUM (**25 Hz anchor**) | PRESETS |
+| REF-037 | Napadow V, et al. | Evoked pain analgesia via respiratory-gated auricular vagal afferent nerve stimulation | Pain Med | 2012 | See Section B | fMRI pilot — MEDIUM | PRESETS |
+| REF-040 | Koopman FA, et al. | VNS inhibits cytokine production in rheumatoid arthritis | PNAS | 2016 | See Section C | Open-label pilot (implanted VNS) — HIGH | PRESETS |
+| REF-041 | Straube A, et al. | Auricular t-VNS for chronic migraine: a randomized clinical trial | J Headache Pain | 2015 | See Section B | Small RCT — MEDIUM | PRESETS |
 
-**Note:** The "Anti-Inflammatory / Chronic Pain" preset (REQUIREMENTS.md FW-08) uses 10 Hz, 250µs, targeting the α7 nAChR pathway established in REF-002/003. No specific taVNS-for-pain clinical trial is cited in the source files.
+**⚠️ GAP NOW PARTIALLY ADDRESSED:** The anti-inflammatory preset is now anchored by REF-034 (Lerman 2016, 25 Hz taVNS → TNF-α reduction). REF-040 (Koopman 2016) provides implanted VNS precedent. REF-037 (Napadow 2012) and REF-041 (Straube 2015) provide pain-modulation evidence. PRESETS.md recommends changing the anti-inflammatory preset frequency from 10 Hz to **25 Hz** based on REF-034.
 
 ### D3. Dysautonomia / POTS / hEDS
 
-**⚠️ GAP: No specific paper is cited.** REQUIREMENTS.md (FW-08) includes a "Dysautonomia / hEDS" preset labeled "⚠️ experimental, low clinical evidence." This is consistent — no foundational reference was provided because the evidence base is sparse.
+| ID | Authors | Title | Journal | Year | URL | Evidence Level | Cited In |
+|----|---------|-------|---------|------|-----|----------------|----------|
+| REF-035 | Bretherton B, et al. | Effects of taVNS in individuals aged 55+: potential benefits of daily stimulation | Aging | 2019 | See Section B | Pilot RCT — MEDIUM (autonomic balance improvement) | PRESETS |
 
-**Recommended search:**
+**⚠️ GAP: Still no direct evidence for taVNS in POTS or hEDS.** PRESETS.md confirms: zero published RCTs for taVNS in POTS or hEDS as of mid-2025. REF-035 (Bretherton 2019) is the closest evidence — it demonstrated improved autonomic balance (parasympathetic shift) in elderly subjects, which is the same mechanism hypothesized for dysautonomia benefit. PRESETS.md labels this preset "Theoretical / Experimental" and recommends the strongest safety warnings. The mechanism is plausible for hyperadrenergic POTS but unvalidated.
+
+**PRESETS.md safety findings for this population:**
+- Start at 0.5 mA (not 1.0 mA) — hEDS sensory hypersensitivity
+- Longer ramp (45s instead of 30s)
+- First 3 sessions limited to 15 min (tolerance test)
+- Seated/recumbent only; never standing
+- Mast cell activation (MCAS) risk is theoretical and undocumented
+
+**Recommended search (unchanged):**
 - [taVNS POTS dysautonomia on PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=transcutaneous+auricular+vagus+nerve+stimulation+POTS+dysautonomia)
 - [taVNS Ehlers-Danlos on PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=vagus+nerve+stimulation+Ehlers-Danlos+hypermobility)
 
@@ -156,6 +187,9 @@ Charge density limits, electrical safety standards, and stimulation safety model
 | REF-017 | IEC | IEC 60601-2-10 — Particular requirements for nerve and muscle stimulators | International Electrotechnical Commission | — | [IEC Webstore](https://webstore.iec.ch/en/publication/2622) | FEATURES, PITFALLS |
 | REF-018 | ANSI/AAMI | ANSI/AAMI NS4:2024 — Transcutaneous electrical nerve stimulators | AAMI | 2024 | [AAMI Store](https://www.aami.org/standards/ns4) | SUMMARY |
 | REF-019 | ISO | ISO 13485 — Medical devices — Quality management systems | International Organization for Standardization | 2016 | [ISO](https://www.iso.org/standard/59752.html) | REQUIREMENTS, FEATURES (AF-10) |
+| REF-038 | Redgrave J, Day D, Leung H, et al. | Safety and tolerability of transcutaneous vagus nerve stimulation in humans; a systematic review | Brain Stimul | 2018 | [DOI: 10.1016/j.brs.2018.01.023](https://doi.org/10.1016/j.brs.2018.01.023) ⚠️ VERIFY | Systematic review — MEDIUM | PRESETS (safety evidence base) |
+
+**Note:** REF-038 (Redgrave 2018) is the most comprehensive published safety review of taVNS in humans. It systematically catalogues adverse events across published taVNS studies. Key finding: taVNS is generally well-tolerated with minor side effects (skin irritation, tingling discomfort). No serious adverse events attributed to taVNS in the reviewed studies. This review supports the overall safety profile used in DOC-02 contraindications.
 
 ### ⚠️ CRITICAL DISCREPANCY: McCreery Year
 
@@ -214,19 +248,27 @@ Not academic citations, but product references used for the competitive comparis
 
 ## Missing / Unresolved References
 
-References mentioned in the source files or task scope that could NOT be resolved to a specific paper with URL.
+References mentioned in the source files or PRESETS.md that could NOT be resolved to a specific paper with confirmed URL.
 
 | What Was Referenced | Where Cited | Why Unresolved | Resolution Path |
 |---------------------|-------------|----------------|-----------------|
-| **"RESET-AF" trial name** | FEATURES, SUMMARY, PROJECT | Cannot confirm "RESET-AF" as an actual trial name. May be confused with Stavrakis 2015 pilot or TREAT-AF 2020. | Search [ClinicalTrials.gov](https://clinicaltrials.gov/search?term=RESET-AF+vagus+nerve+Stavrakis) and [PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=RESET-AF+Stavrakis+atrial+fibrillation) |
-| **Stavrakis 2023 TREAT-AF follow-up** | FEATURES | Source files reference a 2023 publication confirming TREAT-AF results. May exist as a follow-up or sub-analysis not in training data. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=Stavrakis+transcutaneous+vagus+atrial+fibrillation+2023) |
+| **"RESET-AF" trial name** | FEATURES, SUMMARY, PROJECT, PRESETS | Cannot confirm "RESET-AF" as an actual trial name. May be confused with Stavrakis 2015 pilot or TREAT-AF 2020. PRESETS.md uses "RESET-AF" for the 2020 Stavrakis RCT at JACC CE. | Search [ClinicalTrials.gov](https://clinicaltrials.gov/search?term=RESET-AF+vagus+nerve+Stavrakis) and [PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=RESET-AF+Stavrakis+atrial+fibrillation) |
+| **Stavrakis 2023 TREAT-AF follow-up** | FEATURES, PRESETS | Source files reference a 2023 publication confirming TREAT-AF results. PRESETS.md §5.3 refers to "TREAT-AF (2023)" as a larger multicenter follow-up with nuanced primary endpoint results. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=Stavrakis+transcutaneous+vagus+atrial+fibrillation+2023) |
 | **"25Hz / 200µs insomnia protocol"** specific study | FEATURES, PROJECT | No specific RCT cited. Parameters extrapolated from autonomic/cardiac trials. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=transcutaneous+auricular+vagus+nerve+stimulation+insomnia+25Hz) |
 | **ABATIS trial** | Task scope (not in source files) | Not referenced in any source file. May be a planned/unpublished trial or different domain. | [Search ClinicalTrials.gov](https://clinicaltrials.gov/search?term=ABATIS+vagus+nerve+stimulation) |
-| **taVNS bilateral vs. unilateral comparison study** | Task scope (not in source files) | No specific study cited. FEATURES.md acknowledges bilateral taVNS evidence is LOW. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=bilateral+transcutaneous+auricular+vagus+nerve+stimulation+comparison) |
-| **Nuerisym insomnia case reports** | FEATURES, PROJECT | Referenced as "Nuerisym case reports suggest bedtime use for insomnia" — no specific citation. | Contact Nuerisym or search [PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=Nuerisym+insomnia+vagus+nerve+stimulation) |
-| **Dysautonomia / POTS / hEDS taVNS evidence** | REQUIREMENTS | FW-08 preset is labeled "⚠️ experimental, low clinical evidence" — no supporting paper cited. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=transcutaneous+vagus+nerve+stimulation+POTS+dysautonomia) |
+| **taVNS bilateral vs. unilateral comparison study** | Task scope, PRESETS §8.1 | No specific study cited. PRESETS.md confirms no head-to-head bilateral vs. unilateral comparison exists. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=bilateral+transcutaneous+auricular+vagus+nerve+stimulation+comparison) |
+| **Nuerisym insomnia case reports** | FEATURES, PROJECT, PRESETS | Referenced as "Nuerisym case reports suggest bedtime use for insomnia" — no specific peer-reviewed citation. Company-published, not independent. | Contact Nuerisym or search [PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=Nuerisym+insomnia+vagus+nerve+stimulation) |
 | **Polar H10 as "gold standard consumer HRV"** validation | PROJECT | Claim made without citation. REF-012 (Gilgen-Ammann 2019) supports this but was not explicitly referenced. | Verify REF-012 DOI and add to PROJECT.md |
-| **McCreery (2010) vs McCreery (1990)** date discrepancy | All safety sections | Source files cite "McCreery et al. (2010)" for 30µC/cm² limit, but this limit is from the 1990 paper (REF-013). | Correct year to 1990 in all documents. See Section F discrepancy note. |
+| **McCreery (2010) vs McCreery (1990)** date discrepancy | All safety sections | Source files cite "McCreery et al. (2010)" for 30µC/cm² limit, but this limit is from the 1990 paper (REF-013). REFERENCES.md already has the correct year (1990). | Correct year to 1990 in all other `.planning/` documents. |
+| **Jiao et al. (~2020)** — taVNS insomnia RCT | PRESETS §2.1 | PRESETS.md cites "Jiao et al." (likely Evid Based Complement Alternat Med) as an insomnia RCT (N≈60, 20 Hz, cymba conchae). Exact journal, DOI, and N cannot be confirmed from training data. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=Jiao+transcutaneous+auricular+vagus+nerve+stimulation+insomnia) |
+| **Li et al. (2019–2021)** — Chinese insomnia RCTs | PRESETS §2.1 | Multiple Chinese studies referenced generically. Exact citations unresolvable without PubMed search. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=Li+transcutaneous+auricular+vagus+nerve+stimulation+insomnia+sleep) |
+| **Zhao et al. (2019–2020)** — taVNS insomnia RCT | PRESETS §2.1 | LOW confidence on this study. May have used 4/20 Hz alternating protocol. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=Zhao+transcutaneous+auricular+vagus+nerve+stimulation+insomnia) |
+| **Aranow C, et al. (~2021)** — taVNS in SLE | PRESETS §3.1.1 | PRESETS.md recalls a pilot study of taVNS in systemic lupus (Arthritis Rheumatol?). Exact details uncertain. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=Aranow+vagus+nerve+stimulation+lupus+erythematosus) |
+| **Busch V, et al. (~2013)** — taVNS chronic pelvic pain | PRESETS §3.1.2 | LOW confidence pilot study. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=Busch+transcutaneous+auricular+vagus+nerve+stimulation+pelvic+pain) |
+| **Kutlu et al. (~2020)** — taVNS fibromyalgia | PRESETS §3.1.2 | LOW confidence pilot study. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=Kutlu+transcutaneous+vagus+nerve+stimulation+fibromyalgia) |
+| **Johnson et al. (~2022)** — VNS/taVNS pain review | PRESETS §3.1.2 | LOW confidence systematic review. Exact citation uncertain. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=Johnson+vagus+nerve+stimulation+chronic+pain+systematic+review+2022) |
+| **Yu et al. (2013–2017)** — preclinical AF | PRESETS §5.1 | Animal studies (dogs/rats) on low-level tragus stimulation reducing AF inducibility. Multiple papers. | [Search PubMed](https://pubmed.ncbi.nlm.nih.gov/?term=Yu+low-level+tragus+stimulation+atrial+fibrillation+canine) |
+| **Lerman 2016 journal discrepancy** | PRESETS §3.1.1, §10.3 | PRESETS.md cites "Mol Med" (Molecular Medicine). Training data suggests it may have been published in J Neuroimmunol or Bioelectronic Medicine instead. REF-034 DOI needs verification. | Verify DOI: [10.2119/molmed.2016.00066](https://doi.org/10.2119/molmed.2016.00066) |
 
 ---
 
@@ -266,20 +308,32 @@ The clinical parameters and safety limits in this project are grounded in peer-r
 3. Stavrakis S, Stoner JA, Humphrey MB, et al. "TREAT AF: A Randomized Clinical Trial." *JACC Clin Electrophysiol.* 2020;6(1):1-11. [DOI: 10.1016/j.jacep.2019.11.008](https://doi.org/10.1016/j.jacep.2019.11.008)
 4. Badran BW, et al. "Short trains of taVNS have parameter-specific effects on heart rate." *Brain Stimul.* 2018;11(4):699-708. [DOI: 10.1016/j.brs.2018.04.004](https://doi.org/10.1016/j.brs.2018.04.004)
 5. Yakunina N, Kim SS, Nam EC. "Optimization of taVNS Using Functional MRI." *Neuromodulation.* 2017;20(3):290-300. [DOI: 10.1111/ner.12541](https://doi.org/10.1111/ner.12541)
+6. Lerman I, Hauger R, Sorkin L, et al. "Noninvasive transcutaneous vagus nerve stimulation decreases whole blood culture-derived cytokines and chemokines." *Mol Med.* 2016. [DOI: 10.2119/molmed.2016.00066](https://doi.org/10.2119/molmed.2016.00066)
+7. Bretherton B, Atkinson L, Murray A, et al. "Effects of transcutaneous vagus nerve stimulation in individuals aged 55 years or above." *Aging.* 2019. [DOI: 10.18632/aging.102074](https://doi.org/10.18632/aging.102074)
+8. Fang J, Rong P, Hong Y, et al. "Transcutaneous vagus nerve stimulation modulates default mode network in major depressive disorder." *Biol Psychiatry.* 2016;79(4):266-273. [DOI: 10.1016/j.biopsych.2015.03.025](https://doi.org/10.1016/j.biopsych.2015.03.025)
+
+### Pain & Anti-Inflammatory
+9. Napadow V, Edwards RR, Cahalan CM, et al. "Evoked pain analgesia in chronic pelvic pain patients using respiratory-gated auricular vagal afferent nerve stimulation." *Pain Med.* 2012. [DOI: 10.1111/j.1526-4637.2012.01385.x](https://doi.org/10.1111/j.1526-4637.2012.01385.x)
+10. Koopman FA, Chavan SS, Miljko S, et al. "Vagus nerve stimulation inhibits cytokine production and attenuates disease severity in rheumatoid arthritis." *PNAS.* 2016;113(29):8284-8289. [DOI: 10.1073/pnas.1605635113](https://doi.org/10.1073/pnas.1605635113)
+11. Straube A, Ellrich J, Eren O, et al. "Treatment of chronic migraine with auricular t-VNS: a randomized clinical trial." *J Headache Pain.* 2015;16:543. [DOI: 10.1186/s10194-015-0543-3](https://doi.org/10.1186/s10194-015-0543-3)
 
 ### Vagal Neuroscience
-6. Tracey KJ. "The inflammatory reflex." *Nature.* 2002;420:853-859. [DOI: 10.1038/nature01321](https://doi.org/10.1038/nature01321)
-7. Tracey KJ. "Physiology and immunology of the cholinergic antiinflammatory pathway." *J Clin Invest.* 2007;117(2):289-296. [DOI: 10.1172/JCI30555](https://doi.org/10.1172/JCI30555)
+12. Tracey KJ. "The inflammatory reflex." *Nature.* 2002;420:853-859. [DOI: 10.1038/nature01321](https://doi.org/10.1038/nature01321)
+13. Tracey KJ. "Physiology and immunology of the cholinergic antiinflammatory pathway." *J Clin Invest.* 2007;117(2):289-296. [DOI: 10.1172/JCI30555](https://doi.org/10.1172/JCI30555)
 
 ### Stimulation Safety
-8. McCreery DB, Agnew WF, Yuen TG, Bullara L. "Charge density and charge per phase as cofactors in neural injury." *IEEE Trans Biomed Eng.* 1990;37(10):996-1001. [DOI: 10.1109/10.102812](https://doi.org/10.1109/10.102812)
-9. Shannon RV. "A model of safe levels for electrical stimulation." *IEEE Trans Biomed Eng.* 1992;39(4):424-426. [DOI: 10.1109/10.126616](https://doi.org/10.1109/10.126616)
-10. Merrill DR, Bikson M, Jefferys JGR. "Electrical stimulation of excitable tissue: Design of efficacious and safe protocols." *J Neurosci Methods.* 2005;141(2):171-198. [DOI: 10.1016/j.jneumeth.2004.10.020](https://doi.org/10.1016/j.jneumeth.2004.10.020)
+14. McCreery DB, Agnew WF, Yuen TG, Bullara L. "Charge density and charge per phase as cofactors in neural injury." *IEEE Trans Biomed Eng.* 1990;37(10):996-1001. [DOI: 10.1109/10.102812](https://doi.org/10.1109/10.102812)
+15. Shannon RV. "A model of safe levels for electrical stimulation." *IEEE Trans Biomed Eng.* 1992;39(4):424-426. [DOI: 10.1109/10.126616](https://doi.org/10.1109/10.126616)
+16. Merrill DR, Bikson M, Jefferys JGR. "Electrical stimulation of excitable tissue: Design of efficacious and safe protocols." *J Neurosci Methods.* 2005;141(2):171-198. [DOI: 10.1016/j.jneumeth.2004.10.020](https://doi.org/10.1016/j.jneumeth.2004.10.020)
+17. Redgrave J, Day D, Leung H, et al. "Safety and tolerability of transcutaneous vagus nerve stimulation in humans; a systematic review." *Brain Stimul.* 2018. [DOI: 10.1016/j.brs.2018.01.023](https://doi.org/10.1016/j.brs.2018.01.023)
 
 ### HRV Standards
-11. Task Force of the ESC/NASPE. "Heart rate variability: Standards of measurement." *Circulation.* 1996;93(5):1043-1065. [DOI: 10.1161/01.CIR.93.5.1043](https://doi.org/10.1161/01.CIR.93.5.1043)
-12. Laborde S, Mosley E, Thayer JF. "Heart Rate Variability and Cardiac Vagal Tone in Psychophysiological Research." *Front Psychol.* 2017;8:213. [DOI: 10.3389/fpsyg.2017.00213](https://doi.org/10.3389/fpsyg.2017.00213)
-13. Shaffer F, Ginsberg JP. "An Overview of Heart Rate Variability Metrics and Norms." *Front Public Health.* 2017;5:258. [DOI: 10.3389/fpubh.2017.00258](https://doi.org/10.3389/fpubh.2017.00258)
+18. Task Force of the ESC/NASPE. "Heart rate variability: Standards of measurement." *Circulation.* 1996;93(5):1043-1065. [DOI: 10.1161/01.CIR.93.5.1043](https://doi.org/10.1161/01.CIR.93.5.1043)
+19. Laborde S, Mosley E, Thayer JF. "Heart Rate Variability and Cardiac Vagal Tone in Psychophysiological Research." *Front Psychol.* 2017;8:213. [DOI: 10.3389/fpsyg.2017.00213](https://doi.org/10.3389/fpsyg.2017.00213)
+20. Shaffer F, Ginsberg JP. "An Overview of Heart Rate Variability Metrics and Norms." *Front Public Health.* 2017;5:258. [DOI: 10.3389/fpubh.2017.00258](https://doi.org/10.3389/fpubh.2017.00258)
+
+### Reviews
+21. Yap JYY, Keatch C, Lambert E, et al. "Critical review of transcutaneous vagus nerve stimulation: Challenges for translation to clinical practice." *Front Neurosci.* 2020;14:284. [DOI: 10.3389/fnins.2020.00284](https://doi.org/10.3389/fnins.2020.00284)
 
 ### Safety Standards
 - IEC 60601-1:2005+AMD1:2012 — General requirements for medical electrical equipment
@@ -322,6 +376,14 @@ For traceability, showing where each REF-ID maps to claims in the source files.
 | REF-023 | MCP4922 LDAC timing, glitch energy | ARCHITECTURE (§2.1), PITFALLS (H-02) | DAC interface design |
 | REF-024 | DRV8871 specs, dead-time, max voltage | ARCHITECTURE (§2.4) | H-bridge selection |
 | REF-025 | Si8621 isolation specs, CMTI | ARCHITECTURE (§2.2) | Isolation barrier design |
+| REF-034 | taVNS-specific anti-inflammatory effect (TNF-α reduction at 25 Hz) | PRESETS (§3.1.1, §3.2) | Anti-inflammatory preset 25 Hz anchor |
+| REF-035 | Autonomic balance improvement in elderly via taVNS | PRESETS (§2.1, §4.1) | Insomnia + dysautonomia evidence |
+| REF-036 | taVNS modulates DMN in depression; sleep as secondary | PRESETS (§2.1) | Insomnia preset secondary evidence |
+| REF-037 | taVNS modulates central pain-processing circuits | PRESETS (§3.1.2) | Pain preset mechanistic evidence |
+| REF-038 | Systematic safety/tolerability review of taVNS in humans | PRESETS (§10.3) | Safety evidence for DOC-02 |
+| REF-039 | Critical review of taVNS parameter challenges | PRESETS (§10.3) | Protocol standardization gaps |
+| REF-040 | Implanted VNS reduces TNF-α and DAS28 in RA | PRESETS (§3.1.1) | Anti-inflammatory bridge (implanted → auricular rationale) |
+| REF-041 | taVNS for chronic migraine (1 Hz and 25 Hz arms) | PRESETS (§3.1.2) | Pain preset migraine evidence |
 
 ---
 
@@ -330,15 +392,18 @@ For traceability, showing where each REF-ID maps to claims in the source files.
 | Category | Count | HIGH Confidence | MEDIUM | LOW |
 |----------|-------|-----------------|--------|-----|
 | A. Foundational Neuroscience | 3 | 3 | 0 | 0 |
-| B. taVNS Clinical Trials | 4 | 2 | 2 | 0 |
-| D. Target Conditions | 2 new + refs from A/B | 0 | 0 | 2 |
+| B. taVNS Clinical Trials | 10 (+6) | 2 | 8 | 0 |
+| C. VNS Foundational (Implanted) | 3 (+1) | 3 | 0 | 0 |
+| D. Target Conditions | 6 (incl. cross-refs) | 0 | 4 | 2 |
 | E. HRV Methodology | 4 | 3 | 1 | 0 |
-| F. Safety Standards | 7 | 7 | 0 | 0 |
+| F. Safety Standards | 8 (+1) | 7 | 1 | 0 |
 | G. Hardware/Technical | 9 | 7 | 2 | 0 |
 | H. Software/Tools | 5 | 5 | 0 | 0 |
-| **TOTAL unique refs** | **33** | **27** | **4** | **2** |
-| **Unresolved** | **9** | — | — | — |
+| **TOTAL unique refs** | **41** | **30** | **9** | **2** |
+| **Unresolved** | **17** (+8 from PRESETS.md) | — | — | — |
+
+**Change log (2025-07-14 supplement):** +8 new REF-IDs (REF-034 through REF-041) from PRESETS.md clinical evidence review. +8 new unresolved citations (LOW confidence Chinese insomnia RCTs, pain pilots, preclinical studies). Removed 1 item from unresolved ("Dysautonomia / POTS / hEDS taVNS evidence") — now partially addressed by REF-035 cross-reference in D3. McCreery year confirmed correct at 1990 in REFERENCES.md (discrepancy is in other source files only).
 
 ---
 
-*Generated: 2025-07-14 | Reference confidence: HIGH for DOI format, MEDIUM for exact DOI values (from training data, flagged with ⚠️ VERIFY). All DOIs should be tested in a browser before publication.*
+*Generated: 2025-07-14 | Updated: 2025-07-14 (PRESETS.md supplement: +8 refs) | Reference confidence: HIGH for DOI format, MEDIUM for exact DOI values (from training data, flagged with ⚠️ VERIFY). All DOIs should be tested in a browser before publication.*
