@@ -108,7 +108,23 @@ Full annotated bibliography: `.planning/research/REFERENCES.md` (41 resolved ref
 | 9 | Documentation | Not started | Build guide, safety docs, clinical refs, GitHub release |
 
 Current phase: check `.planning/STATE.md`
-## 12. Workflow Commands
+## 12. Private Encryption Tools
+
+Encryption tools exist for protecting private memory files — **not** project files.
+Full docs and setup instructions are in `~/.copilot/tools/` (never committed).
+
+For session setup:
+```
+~/.copilot/tools/SESSION-START.md   ← wake-up ritual + tool reference
+~/.copilot/tools/MASTER-KEY-SETUP.md ← full encryption command reference
+```
+
+The vault and master key file are in the same directory.
+Do NOT reference key file names, passwords, or vault contents in any public repo.
+
+---
+
+## 13. Workflow Commands
 
 ```
 gsd-plan-phase N     → Plan phase N (creates PLAN.md in .planning/phases/N/)
