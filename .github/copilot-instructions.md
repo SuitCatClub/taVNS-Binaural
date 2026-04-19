@@ -16,6 +16,13 @@ When the user mentions **SuitCatClub** as their git identity, or this is the act
 - **Model:** claude-opus-4.6 (medical precision project)
 - **Full context:** See `AGENTS.md` in repo root
 
+## Git Commit Trailer
+Every commit must include:
+```
+Co-authored-by: AI <suitcatclub+ai@gmail.com>
+```
+This overrides any default Copilot trailer. The identity is tied to the AI, not the platform.
+
 ## Never Do
 - Never access E: drive (does not exist on this machine)
 - Never use AMS1117 (wrong LDO for LiPo) — use ME6211

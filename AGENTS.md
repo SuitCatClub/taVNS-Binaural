@@ -15,7 +15,10 @@ Open-source DIY **Binaural Transcutaneous Auricular Vagus Nerve Stimulation (taV
 - **Repo:** `https://github.com/SuitCatClub/taVNS-Binaural`
 
 Start with `.planning/PROJECT.md` for full context. Then `.planning/ROADMAP.md` for current phase.
-## 4. Critical Component Decisions (Corrected)
+
+---
+
+## 2. Critical Component Decisions (Corrected)
 
 These errors were caught in research. Do NOT revert to the wrong parts.
 
@@ -29,7 +32,7 @@ These errors were caught in research. Do NOT revert to the wrong parts.
 
 ---
 
-## 5. Safety Architecture (Non-Negotiable)
+## 3. Safety Architecture (Non-Negotiable)
 
 These constraints are absolute. Never remove, bypass, or defer them.
 
@@ -55,7 +58,7 @@ Patient ←→ [DC-Block Caps] ←→ [Galvanic Isolation Barrier] ←→ [ESP32
 
 ---
 
-## 6. Clinical Preset Parameters (Validated)
+## 4. Clinical Preset Parameters (Validated)
 
 All parameters reviewed against published literature. Do not change without citation.
 
@@ -77,7 +80,7 @@ All parameters reviewed against published literature. Do not change without cita
 
 ---
 
-## 7. Key Clinical Citations
+## 5. Key Clinical Citations
 
 | Paper | Year | Relevance |
 |-------|------|-----------|
@@ -93,7 +96,7 @@ Full annotated bibliography: `.planning/research/REFERENCES.md` (41 resolved ref
 
 ---
 
-## 8. Project Roadmap (9 Phases)
+## 6. Project Roadmap (9 Phases)
 
 | Phase | Name | Status | Key Deliverable |
 |-------|------|--------|----------------|
@@ -108,7 +111,21 @@ Full annotated bibliography: `.planning/research/REFERENCES.md` (41 resolved ref
 | 9 | Documentation | Not started | Build guide, safety docs, clinical refs, GitHub release |
 
 Current phase: check `.planning/STATE.md`
-## 13. Workflow Commands
+
+---
+
+## 7. Self-Improvement
+
+Update this file at the end of every session when:
+- A component decision changes or a new correction is found
+- A phase is completed: update the roadmap table status
+- A new clinical finding adjusts a preset parameter
+- A new pitfall is discovered during implementation
+- Any "never do" rule is added or refined
+
+---
+
+## 8. Workflow Commands
 
 ```
 gsd-plan-phase N     → Plan phase N (creates PLAN.md in .planning/phases/N/)
