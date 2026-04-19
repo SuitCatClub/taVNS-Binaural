@@ -21,18 +21,25 @@
 
 ---
 
-### 2. DC-Blocking Capacitors — 10µF film (buy 4×, 2 per channel + 2 spares)
+### 2. DC-Blocking Capacitors — 2×4.7µF film in parallel per channel (buy 10×)
+
+Two 4.7µF caps in parallel = 9.4µF per channel. This gives a DC-blocking cutoff of ~34Hz into 1kΩ (vs ~16Hz for a single 10µF). Both are well below the 20–25Hz stimulation frequency — functionally equivalent for our application.
+
+**Why 4.7µF instead of 10µF?** 10µF 100V film caps are genuinely scarce in 2025–2026 due to supply chain issues. The 4.7µF value is widely available and much cheaper.
 
 | | |
 |---|---|
-| **AliExpress search** | `"CBB21 capacitor 10uF 100V polypropylene"` |
-| **Amazon.es search** | `"condensador film 10uF 100V polipropileno"` |
-| **Mouser/DigiKey search** | `"film capacitor 10uF 100V"` — look for MKS or CBB21 type, through-hole |
-| **Price** | ~€0.50–1.00 each |
+| **Recommended part** | **Panasonic ECQ-E1475KF** — 4.7µF 100V polyester, through-hole, 10% tolerance |
+| **Farnell (es.farnell.com)** | Search `ECQ-E1475KF` — **428 in stock**, €1.74/ea (qty 1), **€1.28/ea (qty 10+)** |
+| **Qty to buy** | **10** (4 per channel × 2 channels = 4 used + 6 spares) |
+| **Total** | ~€12.80 at qty 10 pricing |
+| **AliExpress fallback** | `"CBB21 capacitor 4.7uF 100V polypropylene"` |
 
-> ✅ **Best pick: MKS / polypropylene (CBB21)** over MKT / polyester (CBB22). Lower loss, more stable, self-healing. At equal price, always pick polypropylene.
+> ✅ **Wiring:** Place **two caps in parallel** at each DC-blocking position. Same pads, same connections — just two components instead of one.
 
-> ⚠️ **CRITICAL — film type only:** Must be **film** type — rectangular yellow/orange body. **NOT** cylindrical aluminum electrolytics (those are polarized and will fail dangerously). Look for "CBB21", "MKS", "polypropylene" in the description.
+> ⚠️ **CRITICAL — film type only:** Must be **film** type — rectangular yellow/orange body. **NOT** cylindrical aluminum electrolytics (those are polarized and will fail dangerously).
+
+> 💡 **Sourcing tip:** Order these together with the PTC fuses (item 4) from Farnell in a single order to save on shipping (~€6–8 to Spain).
 
 ---
 
@@ -50,17 +57,23 @@ Goes **in parallel** with each DC-blocking capacitor. Bleeds any accumulated cha
 
 ---
 
-### 4. PTC Resettable Fuse — 10–15mA hold / 30mA trip (buy 2×)
+### 4. PTC Resettable Fuse — 10mA hold / 30mA trip (buy 10×)
 
 Goes **in series** with each output. Passive, firmware-independent, hardware-only current limiter. If electronics fail or intensity is set too high, the fuse trips before dangerous current reaches you. Resets automatically when cooled.
 
 | | |
 |---|---|
-| **AliExpress search** | `"Bourns MF-MSMF010 resettable fuse"` or `"PPTC resettable fuse 15mA"` |
-| **Mouser / DigiKey** | Bourns `MF-MSMF010` (10mA hold, 20mA trip) or Littelfuse `1812L020` |
-| **Price** | ~€0.30–0.50 each |
+| **Recommended part** | **Bourns MF-MSMF010-2** — 10mA hold, 300mA trip, 60V, **SMD 1812 package** |
+| **Farnell (es.farnell.com)** | Search `MF-MSMF010-2` — **5,702 in stock**, €0.38/ea (min qty 3) |
+| **Qty to buy** | **10** (2 per channel + 8 spares — they're €0.38 each, buy plenty) |
+| **Total** | ~€3.80 |
+| **AliExpress fallback** | `"Bourns MF-MSMF010 resettable fuse"` or `"PPTC resettable fuse 15mA"` |
+
+> ⚠️ **SMD package note:** This is an SMD 1812 pad — not through-hole. For breadboard Phase 1, solder short wires to each pad (your JBC S40 handles this easily). For Phase 8 custom PCB, it's already the right footprint.
 
 > ✅ **Best pick: Bourns MF-MSMF series** over generic Chinese PPTC. Well-documented trip curves — you know exactly when it triggers. For a safety-critical component between you and the circuit, brand matters.
+
+> 💡 **Sourcing tip:** Order together with film caps (item 2) from Farnell — single order, single shipping charge.
 
 ---
 
@@ -398,16 +411,17 @@ Test circuits at precise voltages. Characterize PTC fuse trip points. Essential 
 | Category | Cost |
 |----------|------|
 | TENS unit | €15–35 |
-| DC-blocking caps 10µF film (×4) | €3–5 |
+| DC-blocking caps 4.7µF film (×10, Farnell) | €12.80 |
 | Bleed resistors 1MΩ (×4) | ~€0 (in resistor kit) |
-| PTC fuses 10–15mA (×2) | €1–3 |
+| PTC fuses MF-MSMF010-2 (×10, Farnell) | €3.80 |
+| Farnell shipping to Spain | ~€6–8 |
 | Ear electrodes | €5–20 |
 | Electrode gel | €5–8 |
 | Polar H10 | €60–80 |
 | Resistors assortment kit | €3–5 |
 | Heat shrink | €3 |
 | Misc (tape, wire) | €5–8 |
-| **Subtotal (Phase 1 consumables)** | **~€100–167** |
+| **Subtotal (Phase 1 consumables)** | **~€112–177** |
 | | |
 | **+ Oscilloscope — FNIRSI 1014D** | +€75–90 → covers Phase 1–4 only |
 | **+ Oscilloscope — Rigol DS1054Z (used)** | +€150–200 → covers all 9 phases ← recommended |
