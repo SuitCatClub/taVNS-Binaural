@@ -330,10 +330,62 @@ All bare connections anywhere near the body must be insulated. Not optional.
 
 ---
 
+## 🟡 EARLY-BUY FOR PHASE 2+ (order now to avoid waiting)
+
+### 12. ESP32-S3 DevKit — needed for Phase 2 (Waveform Engine)
+
+| | |
+|---|---|
+| **AliExpress search** | `"ESP32-S3 DevKitC-1 N16R8"` (16MB flash, 8MB PSRAM) |
+| **Amazon.es search** | `"ESP32-S3 placa desarrollo"` |
+| **Price** | ~€8–12 |
+
+> ✅ **Best pick: N16R8 variant** (16MB flash + 8MB PSRAM). The extra PSRAM is needed for BLE + session logging in Phase 6-7. Cheaper N8R2 works for Phase 2-3 but you'll replace it later.
+
+---
+
+### 13. Logic Analyzer — 8+ channels, USB
+
+Much better than oscilloscope for debugging SPI/I2C/BLE digital signals. See all bus lines simultaneously.
+
+| | |
+|---|---|
+| **AliExpress search** | `"Saleae logic analyzer 24MHz 8 channel"` (clone) |
+| **Amazon.es search** | `"analizador logico USB 8 canales"` |
+| **Software** | PulseView (free, open-source sigrok) or Saleae Logic 2 (free tier) |
+| **Price** | ~€8–15 (clone) |
+
+---
+
+### 14. Bench Power Supply — adjustable voltage/current
+
+Test circuits at precise voltages. Characterize PTC fuse trip points. Essential for Phase 2+ development.
+
+| | |
+|---|---|
+| **AliExpress search** | `"adjustable bench power supply 30V 5A"` |
+| **Amazon.es search** | `"fuente alimentación regulable laboratorio 30V 5A"` |
+| **Budget pick** | Any generic 30V/5A with fine adjustment (~€30–40) |
+| **Better pick** | Wanptek / NICE-POWER branded (~€40–55, better regulation) |
+| **Price** | ~€30–55 |
+
+---
+
 ## 🟢 NICE TO HAVE
+
+### Safety upgrades
+
+| Item | Search | ~Price | Why |
+|------|--------|--------|-----|
+| IR thermometer | `"termómetro infrarrojo digital"` | €8–12 | Monitor electrode site temp during sessions. Thermal damage precedes visible burns. |
+| TVS diodes (bidirectional, 5V) | `"TVS diode bidirectional 5V SMD"` | €1–2 | ESD protection on patient-facing lines. Cheap insurance. |
+
+### Workbench tools
 
 | Item | Search | ~Price |
 |------|--------|--------|
+| Helping hands / PCB holder | `"tercera mano soldadura"` or `"PCB holder"` | €8–12 |
+| Soldering station (Pinecil / TS101) | `"Pinecil V2"` or `"TS101 soldering iron"` | €25–40 |
 | Medical tape (Micropore) | `"micropore tape"` — farmacia | €2 |
 | Alligator clip cables | `"cables cocodrilo laboratorio"` | €3–5 |
 | Hookup wire 22 AWG | `"cable puente arduino"` | €3 |
@@ -355,7 +407,7 @@ All bare connections anywhere near the body must be insulated. Not optional.
 | Resistors assortment kit | €3–5 |
 | Heat shrink | €3 |
 | Misc (tape, wire) | €5–8 |
-| **Subtotal (consumables only)** | **~€100–167** |
+| **Subtotal (Phase 1 consumables)** | **~€100–167** |
 | | |
 | **+ Oscilloscope — FNIRSI 1014D** | +€75–90 → covers Phase 1–4 only |
 | **+ Oscilloscope — Rigol DS1054Z (used)** | +€150–200 → covers all 9 phases ← recommended |
@@ -363,6 +415,13 @@ All bare connections anywhere near the body must be insulated. Not optional.
 | **+ Multimeter — UNI-T UT61E+** | +€30–40 ← if buying new |
 | **+ Multimeter — Fluke 115** | +€100–130 ← if you want it to last forever |
 | **+ Multimeter — existing** | €0 ← pending model assessment |
+| | |
+| **+ ESP32-S3 DevKit (Phase 2)** | +€8–12 |
+| **+ Logic analyzer (Phase 2+)** | +€8–15 |
+| **+ Bench power supply (Phase 2+)** | +€30–55 |
+| **+ Safety upgrades (IR thermo + TVS)** | +€9–14 |
+| **+ Soldering station (if needed)** | +€25–40 |
+| **+ Helping hands** | +€8–12 |
 
 ---
 
