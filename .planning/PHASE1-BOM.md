@@ -25,12 +25,14 @@
 
 | | |
 |---|---|
-| **AliExpress search** | `"CBB capacitor 10uF 100V film"` |
-| **Amazon.es search** | `"condensador film 10uF 100V CBB"` |
-| **Mouser part** | WIMA MKS4F041005D00KSSD (10µF, 250V) |
+| **AliExpress search** | `"CBB21 capacitor 10uF 100V polypropylene"` |
+| **Amazon.es search** | `"condensador film 10uF 100V polipropileno"` |
+| **Mouser/DigiKey search** | `"film capacitor 10uF 100V"` — look for MKS or CBB21 type, through-hole |
 | **Price** | ~€0.50–1.00 each |
 
-> ⚠️ **CRITICAL — film type only:** Must be **film** type — rectangular yellow/orange body. **NOT** cylindrical aluminum electrolytics (those are polarized and will fail dangerously). Look for "CBB", "MKT", "MKS", "polypropylene", or "polyester film" in the description.
+> ✅ **Best pick: MKS / polypropylene (CBB21)** over MKT / polyester (CBB22). Lower loss, more stable, self-healing. At equal price, always pick polypropylene.
+
+> ⚠️ **CRITICAL — film type only:** Must be **film** type — rectangular yellow/orange body. **NOT** cylindrical aluminum electrolytics (those are polarized and will fail dangerously). Look for "CBB21", "MKS", "polypropylene" in the description.
 
 ---
 
@@ -40,9 +42,11 @@ Goes **in parallel** with each DC-blocking capacitor. Bleeds any accumulated cha
 
 | | |
 |---|---|
-| **AliExpress search** | `"resistor 1M ohm 1/4W metal film assortment"` |
-| **Amazon.es search** | `"resistencias 1 megaohm 1/4W"` |
+| **AliExpress search** | `"resistor 1M ohm 1/4W metal film"` |
+| **Amazon.es search** | `"resistencias 1 megaohm 1/4W metal film"` |
 | **Price** | < €1 — included in any resistor assortment kit |
+
+> ✅ **Best pick: Metal film (±1%)** over carbon film (±5%). Lower noise, tighter tolerance, more stable. Same price in assortment kits.
 
 ---
 
@@ -52,9 +56,11 @@ Goes **in series** with each output. Passive, firmware-independent, hardware-onl
 
 | | |
 |---|---|
-| **AliExpress search** | `"PPTC resettable fuse 15mA 30mA"` or `"polyfuse 15mA"` |
+| **AliExpress search** | `"Bourns MF-MSMF010 resettable fuse"` or `"PPTC resettable fuse 15mA"` |
 | **Mouser / DigiKey** | Bourns `MF-MSMF010` (10mA hold, 20mA trip) or Littelfuse `1812L020` |
 | **Price** | ~€0.30–0.50 each |
+
+> ✅ **Best pick: Bourns MF-MSMF series** over generic Chinese PPTC. Well-documented trip curves — you know exactly when it triggers. For a safety-critical component between you and the circuit, brand matters.
 
 ---
 
@@ -69,13 +75,15 @@ The cymba conchae is the **upper hollow of the ear bowl** (above the antitragus)
 | **Amazon.es search** | `"electrodos TENS autoadhesivos"` (any brand, 40-pack) |
 | **Price** | €5–10 |
 
-**Option B — Better fit:** TENS ear clip electrodes (clip to ear, repositionable to cymba conchae).
+**Option B — Better fit (recommended):** TENS ear clip electrodes (clip to ear, repositionable to cymba conchae).
 
 | | |
 |---|---|
 | **AliExpress search** | `"ear electrode TENS clip auricular"` |
 | **Amazon.es search** | `"electrodo auricular TENS oreja"` |
 | **Price** | €5–12 |
+
+> ✅ **Best pick: Ear clips (Option B).** Repositionable, consistent pressure, reusable across sessions. Cut pads shift on the cymba conchae and adhesive degrades with gel.
 
 **Option C — Best:** Dedicated taVNS / auricular vagus nerve electrodes.
 
@@ -93,9 +101,11 @@ The cymba conchae is the **upper hollow of the ear bowl** (above the antitragus)
 | | |
 |---|---|
 | **Where** | Farmacia or Amazon.es |
-| **Amazon.es search** | `"gel conductor electrodos TENS ECG"` |
+| **Amazon.es search** | `"Spectra 360 gel conductor"` or `"gel conductor electrodos TENS ECG"` |
 | **Price** | €5–8 |
 | **Why** | Reduces skin-electrode impedance to <5kΩ — required by Phase 1 success criteria. |
+
+> ✅ **Best pick: Spectra 360 (Parker Labs)** if available. Clinical standard — salt-free formulation designed for long sessions. Generic TENS gels sometimes dry out mid-session.
 
 ---
 
@@ -300,7 +310,9 @@ Needed in Phase 1 to verify DC offset <1mV across dummy load. Used in every phas
 | Dummy load | **1kΩ, 1W, ±1%** | 2× | Connect across output to verify waveform before skin |
 | Current sense | **10Ω, 1W, ±1%** | 2× | In-series measurement: V=IR → 1mA=10mV |
 
-Any resistor assortment kit on AliExpress (~€3) includes both values.
+> ✅ **Best pick: Metal film ±1%** over carbon film ±5%. When measuring mV of DC offset across the dummy load, a ±5% resistor adds uncertainty you don't need.
+
+Any metal film resistor assortment kit on AliExpress (~€3) includes both values.
 
 ---
 
@@ -310,9 +322,11 @@ All bare connections anywhere near the body must be insulated. Not optional.
 
 | | |
 |---|---|
-| **AliExpress search** | `"heat shrink tubing assortment"` |
-| **Amazon.es search** | `"termorretráctil surtido"` |
-| **Price** | ~€3 |
+| **AliExpress search** | `"dual wall heat shrink tubing adhesive lined assortment"` |
+| **Amazon.es search** | `"termorretráctil doble pared adhesivo surtido"` |
+| **Price** | ~€3–5 |
+
+> ✅ **Best pick: Dual-wall with adhesive lining** over standard single-wall. Melts and seals — no moisture ingress. Matters near skin and conductive gel.
 
 ---
 
