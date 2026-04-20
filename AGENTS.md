@@ -102,8 +102,8 @@ Full annotated bibliography: `.planning/research/REFERENCES.md` (41 resolved ref
 
 | Phase | Name | Status | Key Deliverable |
 |-------|------|--------|----------------|
-| 1 | TENS Hack | Not started | Modified TENS unit producing 0.5–5mA at ear electrodes |
-| 2 | Waveform Engine | Not started | ESP32-S3 charge-balanced biphasic ISR, scope-verified |
+| 1 | TENS Hack | **SCRAPPED** | Skipped — going directly to custom ESP32 build for real clinical parameters |
+| 2 | Waveform Engine | **START HERE** | ESP32-S3 charge-balanced biphasic ISR, scope-verified |
 | 3 | Firmware Safety | Not started | Bounds checking, watchdog, soft-start, fault-safe |
 | 4 | Safety Hardware | Not started | Isolation barrier, DC-block, overcurrent, USB interlock |
 | 5 | Dual-Channel | Not started | Binaural stagger, per-channel current, impedance sensing |
