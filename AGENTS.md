@@ -28,7 +28,7 @@ These errors were caught in research. Do NOT revert to the wrong parts.
 | Isolated DC-DC | B0515S-1W | **B0515D-1WR3** | B0515S = single +15V only. Howland pump / V-to-I needs dual **±15V**. -1WR3 = dual rail |
 | BLE Library | NimBLE-Arduino 2.3.x | **NimBLE-Arduino ≥2.4.0** (use 2.5.0) | 2.3.x has regression breaking ESP32-S3 dual-role BLE (peripheral + central simultaneously) |
 | Timer API | Arduino-ESP32 2.x style | **Arduino-ESP32 3.x API** | Timer API changed in 3.x. Old tutorials will compile but behave incorrectly. Use RepeatTimer example. |
-| Current source topology | Howland current pump | **V-to-I converter (OPA388)** | Research resolved: V-to-I is more stable into varying electrode impedance |
+| Current source topology | Howland current pump | **V-to-I converter (ADA4522-2ARZ)** | Research resolved: V-to-I is more stable into varying electrode impedance. OPA388 max supply = 5.5V — cannot run on ±15V isolated rail. ADA4522-2ARZ = zero-drift, ±27.5V, dual SOIC-8. |
 | H-Bridge / Motor Driver | A4950ELJTR-T (40V) | **DRV8871DDAR (45V)** | A4950 = 40V operating (marginal headroom over 30V supply). DRV8871 = 45V operating / 50V absolute max, same SOIC-8 package, adds analog current sense output useful for Phase 5 impedance monitoring. DigiKey: 296-43024-1-ND |
 | PPTC Fuse | MF-MSMF010-2 (100mA hold) | **Yageo SMD0603B001TF (10mA hold)** | "010" in Bourns MF-MSMF naming = 0.10A = 100mA — far above device's 5mA working current. Yageo SMD0603B001TF = 10mA hold / 30mA trip, 0603 SMD. DigiKey: 13-SMD0603B001TFCT-ND |
 
