@@ -86,7 +86,7 @@ LiPo (3.0–4.2V, 2000mAh)
     │    SOT-23-5                                 │
     │    Cin: 1µF, Cout: 1µF                      ├── ESP32-S3 (~150mA avg)
     │                                              ├── SI8380P-IU digital side VDD1
-    │                                              └── SI8622EC digital side VDD1
+    │                                              └── SI8621EC digital side VDD1
     │
     └──► TPS61023 (boost) ──► 5.0V BOOST RAIL
          SOT-563                      │
@@ -106,7 +106,7 @@ LiPo (3.0–4.2V, 2000mAh)
                                                                     ±15V powers:  │ 5V_ISO powers:
                                                                     ├── ADA4522-2ARZ  ├── MCP4922 DAC
                                                                     ├── 2× DRV8871   ├── SI8380P-IU VDD2
-                                                                    │                 ├── SI8622EC VDD2
+                                                                    │                 ├── SI8621EC VDD2
                                                                     └── LM339DR       └── LM339DR VCC
 ```
 
@@ -123,7 +123,7 @@ Add between TPS61023 output and PCN1-S5-D15-M-TR input:
 |----------|---------------------------|
 | ESP32-S3 (via ME6211 3.3V LDO) | ~50mA (3.3V×150mA / 5V×0.93) |
 | PCN1-S5-D15-M-TR (1W isolated DC-DC at 78% eff) | ~256mA |
-| SI8380P-IU + SI8622EC digital isolators | ~16mA |
+| SI8380P-IU + SI8621EC digital isolators | ~16mA |
 | Boost converter overhead | ~10mA |
 | Status LED | ~5mA |
 | **Total from LiPo (via boost)** | **~330mA at 3.7V** |
@@ -199,7 +199,7 @@ From ARCHITECTURE.md §2.5 (confirmed and updated):
 | Component | Shared? | Per Channel | Qty for 2-Channel |
 |-----------|---------|-------------|-------------------|
 | MCP4922 DAC | **Shared** (dual-channel IC) | — | **1** |
-| SI8622EC-B-IS digital isolator | **Partially shared** (see below) | — | **2** (see analysis) |
+| SI8621EC-B-IS digital isolator | **Partially shared** (see below) | — | **2** (see analysis) |
 | ADA4522-2ARZ op-amp (error amp) | **Shared** (dual IC) | — | **1** |
 | DRV8871DDAR H-bridge | **Independent** | 1 per channel | **2** |
 | Rsense (100Ω, 0.1%) | **Independent** | 1 per channel | **2** |
@@ -212,7 +212,7 @@ From ARCHITECTURE.md §2.5 (confirmed and updated):
 | ME6211C33M5G LDO | **Shared** | — | **1** |
 | ESP32-S3 | **Shared** | — | **1** |
 
-### SI8622EC Isolator Channel Analysis
+### SI8621EC Isolator Channel Analysis
 
 Signals crossing the isolation barrier:
 
@@ -230,17 +230,17 @@ Signals crossing the isolation barrier:
 | Fault flag | Patient → Digital | 1 |
 | **Total** | | **10 channels** |
 
-SI8622EC-B-IS = 2 channels (1 forward + 1 reverse). For 10 channels:
-- **Option A:** 5× SI8622EC-B-IS (10 channels) — more ICs but all bidirectional
-- **Option B:** 2× SI8642EC (4-ch unidirectional, Skyworks) + 1× SI8622EC (for bidirectional fault flag) = 3 ICs for 10 channels
-- **Option C:** 2× SI8641EC-B-IS (4-ch, 3+1 direction) + 1× SI8622EC-B-IS (2-ch bidirectional) = **3 ICs, 10 channels**
-- **Option D (recommended):** 1× SI8380P-IU (8-ch, all forward) + 1× SI8622EC-B-IS (1 forward + 1 reverse) = **2 ICs, 10 channels**
+SI86XY naming: X = total channels, Y = reverse channels. SI8621 = 1F+1R. ~~SI8622 = 0F+2R (both reverse — wrong part for this use case).~~ For 10 channels:
+- **Option A:** 5× SI8621EC-B-IS (10 channels) — more ICs but each has 1F+1R
+- **Option B:** 2× SI8642EC (4-ch unidirectional, Skyworks) + 1× SI8621EC (for bidirectional fault flag) = 3 ICs for 10 channels
+- **Option C:** 2× SI8641EC-B-IS (4-ch, 3+1 direction) + 1× SI8621EC-B-IS (2-ch, 1F+1R) = **3 ICs, 10 channels**
+- **Option D (recommended):** 1× SI8380P-IU (8-ch, all forward) + 1× SI8621EC-B-IS (1 forward + 1 reverse) = **2 ICs, 10 channels**
 
-**Recommended: 1× SI8380P-IU + 1× SI8622EC-B-IS = 2 isolator ICs total**
+**Recommended: 1× SI8380P-IU + 1× SI8621EC-B-IS = 2 isolator ICs total**
 
 Signal assignment:
 - SI8380P-IU → SPI SCK, SPI MOSI, SPI CS, LDAC, H-bridge IN1_A, IN2_A, IN1_B, IN2_B (8 forward)
-- SI8622EC-B-IS → Heartbeat watchdog (forward) + Fault flag (reverse) (2 channels)
+- SI8621EC-B-IS → Heartbeat watchdog (forward) + Fault flag (reverse) (2 channels)
 
 Advantage over Option C: one fewer IC, no 3+1 channel-split ambiguity, all control signals in one package, simpler PCB routing, push-pull outputs (no pull-up resistors on isolated side).
 
@@ -256,7 +256,7 @@ Advantage over Option C: one fewer IC, no 3+1 channel-split ambiguity, all contr
 | U6 | Error amp (dual) | ADA4522-2ARZ | 1 | V-to-I, both channels |
 | U7, U8 | H-bridge | DRV8871DDAR | **2** | 1 per channel |
 | U9 | 8-ch isolator (all forward) | SI8380P-IU | **1** | SPI + H-bridge control (all 8 forward signals) |
-| U10 | 2-ch isolator (bidirectional) | SI8622EC-B-IS | 1 | Heartbeat (forward) + Fault flag (reverse) |
+| U10 | 2-ch isolator (1F+1R) | SI8621EC-B-IS | 1 | Heartbeat (forward) + Fault flag (reverse) |
 | U12 | Quad comparator | LM339DR | 1 | Overcurrent (both channels) + heartbeat watchdog + spare |
 | U13 | LiPo charger | TP4056X | 1 | USB-C charging |
 | U14 | LDO +15V→5V_ISO | TLV70450DBVR | 1 | DAC/isolator power, SOT-23-5 |
@@ -536,7 +536,7 @@ For a battery-powered Type BF applied part, the key requirement is **Means of Pa
 |-----------|-----------------|------|
 | PCN1-S5-D15-M-TR | **1500VDC** | Power transfer across barrier |
 | SI8380P-IU | **2500Vrms (~3535Vpk)** | Signal transfer across barrier (8 forward) |
-| SI8622EC-B-IS | **3750Vrms (~5300Vpk)** | Signal transfer across barrier (heartbeat + fault) |
+| SI8621EC-B-IS | **3750Vrms (~5300Vpk)** | Signal transfer across barrier (heartbeat + fault) |
 | DC-blocking caps | **50V** (not an isolation component) | DC-blocking only |
 
 **The isolation barrier is defined by the WEAKEST link: PCN1-S5-D15-M-TR at 1500VDC.** Both digital isolators exceed this, so they are not the limiting factor.
@@ -584,7 +584,7 @@ For a battery-powered Type BF applied part, the key requirement is **Means of Pa
 | Ref | Description | MPN | Package | Qty | DigiKey PN | ~Unit Price |
 |-----|-------------|-----|---------|-----|-----------|-------------|
 | U9 | 8-ch digital isolator (all forward) | **SI8380P-IU** | QSOP-20 | **1** | — (Skyworks/Mouser) | ~$3.50 |
-| U10 | 2-ch bidirectional isolator | **SI8622EC-B-IS** | SOIC-8 | 1 | 336-1750-ND | $3.00 |
+| U10 | 2-ch isolator (1F+1R) | **SI8621EC-B-IS** | SOIC-8 | 1 | 336-1750-ND | $3.00 |
 
 #### Safety
 
@@ -687,7 +687,7 @@ This is a **hardware-only** interlock — firmware cannot bypass it.
 
 The isolated side must have a way to detect if the ESP32 has crashed. Solution from ARCHITECTURE.md:
 
-- ESP32 Core 1 generates a 100Hz PWM "heartbeat" signal → crosses barrier via SI8622
+- ESP32 Core 1 generates a 100Hz PWM "heartbeat" signal → crosses barrier via SI8621EC
 - On isolated side: RC detector (τ ≈ 50ms) + comparator
 - If heartbeat stops for >50ms (ESP32 crash, BLE lockup, etc.): comparator output goes LOW → kills analog power enable → all stimulation stops
 
@@ -724,9 +724,9 @@ AGENTS.md §2 lists OPA388 as the correct op-amp for V-to-I converter. However:
 
 ## 13. Open Items for PCB Layout Phase
 
-1. **Isolation slot:** Route a milled slot in the PCB between digital and patient domains. Minimum 6mm width. Narrow to ~3mm only under isolation ICs (SI8380P-IU, SI8622EC, PCN1-S5-D15-M-TR) where internal IC isolation supplements PCB creepage.
+1. **Isolation slot:** Route a milled slot in the PCB between digital and patient domains. Minimum 6mm width. Narrow to ~3mm only under isolation ICs (SI8380P-IU, SI8621EC, PCN1-S5-D15-M-TR) where internal IC isolation supplements PCB creepage.
 2. **Ground planes:** Separate GND_DIGITAL and GND_ISO copper pours. Connect ONLY through PCN1-S5-D15-M-TR isolation.
-3. **Barrier component placement:** All three barrier-crossing components (PCN1-S5-D15-M-TR, SI8380P-IU, SI8622EC-B-IS) placed in a line along the isolation slot. PCN1 pad groups must align with slot (CUI datasheet specifies ~5mm input-to-output pad gap).
+3. **Barrier component placement:** All three barrier-crossing components (PCN1-S5-D15-M-TR, SI8380P-IU, SI8621EC-B-IS) placed in a line along the isolation slot. PCN1 pad groups must align with slot (CUI datasheet specifies ~5mm input-to-output pad gap).
 4. **DRV8871 thermal pad:** SOIC-8 PowerPAD needs vias to internal copper pour for heat dissipation (even at 5mA, good practice). Same for TP4056X ESOP exposed pad.
 5. **Analog layout:** Keep DAC output traces short, away from switching signals. Route Rsense feedback as a Kelvin connection (4-wire sense).
 6. **SPI routing:** SPI traces on digital side → through SI8380P-IU → to DAC on patient side. Keep SPI clock and data parallel-routed. No impedance matching needed at 1 MHz (SI8380P-IU limit: 2 Mb/s).

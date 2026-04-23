@@ -29,7 +29,7 @@ These errors were caught in research. Do NOT revert to the wrong parts.
 | Boost converter | (missing) | **TPS61023 (SOT-563)** | LiPo max 4.2V never reaches PCN1's 4.5V min input. TPS61023: 0.5–5.5V→5V, 3.7A peak switch, 900nA quiescent, SOT-563 (easier hand-solder than WSON). DigiKey: ~$0.75 |
 | Op-amp (V-to-I error amp) | OPA388 / AD8628ARZ | **ADA4522-2ARZ** | OPA388 and AD8628 max supply = 5–5.5V — cannot run on ±15V isolated rail. ADA4522-2ARZ = zero-drift, ±27.5V, dual SOIC-8, 2.7MHz GBW. DigiKey: ADA4522-2ARZ-ND |
 | Isolated-side DAC LDO | (missing) | **TLV70450DBVR** | MCP4922 DAC sits on isolated side, needs 5V. Taps +15V rail. 24V input, 5V/150mA, SOT-23-5. DigiKey: TLV70450DBVRCT-ND |
-| Digital Isolators | SI8622EC-B-IS ×N | **1× SI8380P-IU + 1× SI8622EC-B-IS** | 10 signals cross the barrier (8 forward + 2 bidirectional). SI8380P-IU = 8-ch all-forward (QSOP-20, push-pull, 2500Vrms) — all SPI + H-bridge signals. SI8622EC = 2-ch bidirectional for heartbeat/fault. 2 ICs total (was 3). |
+| Digital Isolators | SI8622EC-B-IS ×N | **1× SI8380P-IU + 1× SI8621EC-B-IS** | 10 signals cross the barrier (8 forward + 1 forward + 1 reverse). SI8380P-IU = 8-ch all-forward (QSOP-20, push-pull, 2500Vrms) — all SPI + H-bridge signals. SI8621EC = 1F+1R for heartbeat/fault. **Not SI8622** (SI86XY naming: Y=reverse channels, so 22=0F+2R, 21=1F+1R). 2 ICs total. |
 | USB charging interlock | (missing) | **BSS138 N-MOSFET** | VBUS present → BSS138 pulls TPS61023 EN LOW → boost OFF → ±15V OFF → hardware-only stimulation lockout during charging |
 | Current source topology | Howland current pump | **V-to-I converter** | V-to-I more stable into varying electrode impedance. Rsense inherently stabilizes the feedback loop. |
 | H-Bridge | A4950ELJTR-T (40V) | **DRV8871DDAR** | 45V operating / 50V abs max. Integrated IPROPI current sense used for impedance monitoring. SOIC-8 PowerPAD. DigiKey: 296-43024-1-ND |
@@ -50,7 +50,7 @@ These constraints are absolute. Never remove, bypass, or defer them.
 ```
 Patient ←→ [DC-Block Caps 10µF/50V] ←→ [Galvanic Isolation Barrier] ←→ [ESP32 + DAC]
               ↕                                    ↕
-        [Hardware overcurrent]        [1× SI8380P-IU (8-ch forward) + 1× SI8622EC-B-IS (2-ch bidi)]
+        [Hardware overcurrent]        [1× SI8380P-IU (8-ch forward) + 1× SI8621EC-B-IS (1F+1R)]
         [PPTC 10mA + LM339 latch]    [PCN1-S5-D15-M-TR isolated DC-DC, 1500VDC]
         [DRV8871 IPROPI contact check] [BSS138 USB charging interlock]
         [Heartbeat watchdog latch]
@@ -193,7 +193,7 @@ Tongue-palate/parafunctional research: **`.planning/research/TONGUE-PALATE.md`**
 **Key distributor assignments:**
 | Source | Parts |
 |--------|-------|
-| DigiKey | ADA4522-2ARZ, DRV8871DDAR, TLV70450DBVR, SI8380P-IU, SI8622EC-B-IS, MCP4922-E/SL, Susumu RG2012P-101-B-T5, SMD0603B001TF, BSS138, LM339DR |
+| DigiKey | ADA4522-2ARZ, DRV8871DDAR, TLV70450DBVR, SI8380P-IU, SI8621EC-B-IS, MCP4922-E/SL, Susumu RG2012P-101-B-T5, SMD0603B001TF, BSS138, LM339DR |
 | LCSC/AliExpress | ME6211C33M5G, TP4056X, Samsung CL31B106KBHNNNE, passives (0402/0603/0805), LiPo battery |
 | Mouser/CUI | PCN1-S5-D15-M-TR, TPS61023 (SOT-563) |
 
