@@ -259,19 +259,22 @@ Advantage over Option C: one fewer IC, no 3+1 channel-split ambiguity, all contr
 | U10 | 2-ch isolator (bidirectional) | SI8622EC-B-IS | 1 | Heartbeat (forward) + Fault flag (reverse) |
 | U12 | Quad comparator | LM339DR | 1 | Overcurrent (both channels) + heartbeat watchdog + spare |
 | U13 | LiPo charger | TP4056X | 1 | USB-C charging |
-| R_S1, R_S2 | Sense resistor | Susumu RG2012P-101-B-T5 | **2** | 100Ω 0.1% 10PPM, 0805 |
+| U14 | LDO +15V→5V_ISO | TLV70450DBVR | 1 | DAC/isolator power, SOT-23-5 |
+| Q1 | USB interlock MOSFET | BSS138 | 1 | VBUS → EN disable, SOT-23 |
+| R_S1, R_S2 | Sense resistor | Susumu RG2012P-101-B-T5 | **2** | 100Ω 0.1% 25PPM, 0805 |
 | R_B1, R_B2 | Bleed resistor | Generic 1MΩ 1% 0805 | **2** | Across DC-block caps |
-| C_DC1, C_DC2 | DC-blocking cap | TDK C3216X7R1H106K160AB | **2** (+2 spare) | 10µF 50V 1206 |
+| C_DC1, C_DC2 | DC-blocking cap | Samsung CL31B106KBHNNNE | **2** (+2 spare) | 10µF 50V 1206 |
 | F1, F2 | PPTC fuse | SMD0603B001TF | **2** (+2 spare) | 10mA hold, 0603 |
 | L1 | Boost inductor | Würth 744043002 or similar | 1 | 2.2µH, 1A, ≤200mΩ |
 | FB1 | CM choke | Würth 744232601 | 1 | 600Ω @ 100MHz |
 | — | Passives (decoupling) | Various 0402/0603 | ~30 | 100nF, 10µF, 47µF, etc. |
 | — | Feedback resistors | Various 0603 1% | ~10 | Boost divider, comparator ref, etc. |
 | BT1 | LiPo battery | Generic 3.7V 2000mAh | 1 | With protection PCB |
-| J1 | USB-C connector | Generic USB-C 2.0 | 1 | Charging only |
-| SW1 | Emergency stop | Tactile NO switch | 1 | Hardware kill |
+| J1 | USB-C connector | Generic USB-C 2.0 | 1 | Charging only, SMD |
+| J2, J3 | Electrode connectors | JST PH 2-pin SMD | **2** | Patient-facing, SMD variant |
+| SW1 | Emergency stop | Tactile NO switch | 1 | Hardware kill, **through-hole** |
 
-**Total active ICs: 12** | **Total unique SMD component types: ~25** | **Total components: ~65**
+**Total active ICs: 13** (incl. U14) | **Discrete: 1** (Q1) | **Total unique SMD types: ~27** | **Total components: ~70**
 
 ---
 
@@ -588,6 +591,7 @@ For a battery-powered Type BF applied part, the key requirement is **Means of Pa
 | Ref | Description | MPN | Package | Qty | DigiKey PN | ~Unit Price |
 |-----|-------------|-----|---------|-----|-----------|-------------|
 | U12 | Quad comparator (overcurrent + watchdog) | **LM339DR** | SOIC-14 | 1 | 296-1393-1-ND | $0.50 |
+| Q1 | USB interlock N-MOSFET | **BSS138** | SOT-23 | 1 | BSS138CT-ND | $0.10 |
 | SW1 | Emergency stop button | Generic tactile NO | Through-hole | 1 | — | $0.50 |
 
 #### MCU
