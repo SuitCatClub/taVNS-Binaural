@@ -25,16 +25,16 @@ These errors were caught in research. Do NOT revert to the wrong parts.
 | Component | ❌ WRONG | ✅ CORRECT | Why |
 |-----------|----------|-----------|-----|
 | LDO Regulator | AMS1117-3.3 | **ME6211C33M5G** | AMS1117 has 1.1V dropout — incompatible with LiPo (3.7V nom). ME6211 = 100mV dropout, 0.1µA standby, SOT-23-5. Source: AliExpress/LCSC |
-| Isolated DC-DC | B0515S-1W | **B0515D-1WR3** | B0515S = single +15V only. V-to-I needs dual **±15V**. -1WR3 = dual rail, 1500VDC isolation (1 MOPP Type BF). Source: LCSC/AliExpress |
-| Boost converter | (missing) | **TPS61023DRLR** | LiPo max 4.2V never reaches B0515D-1WR3's 4.5V min input. TPS61023: 2.0–5.5V→5V, 500mA, 4MHz switching (low ripple), SOT-5. DigiKey: ~$0.75 |
+| Isolated DC-DC | B0515S-1W | **PCN1-S5-D15-M-TR** | B0515S = single +15V only. V-to-I needs dual **±15V**. PCN1-S5-D15-M-TR (CUI) = dual ±15V, 1500VDC isolation (1 MOPP Type BF), SMD-8, unregulated (acceptable — V-to-I self-regulates). Source: Mouser/CUI |
+| Boost converter | (missing) | **TPS61023 (SOT-563)** | LiPo max 4.2V never reaches PCN1's 4.5V min input. TPS61023: 0.5–5.5V→5V, 3.7A peak switch, 900nA quiescent, SOT-563 (easier hand-solder than WSON). DigiKey: ~$0.75 |
 | Op-amp (V-to-I error amp) | OPA388 / AD8628ARZ | **ADA4522-2ARZ** | OPA388 and AD8628 max supply = 5–5.5V — cannot run on ±15V isolated rail. ADA4522-2ARZ = zero-drift, ±27.5V, dual SOIC-8, 2.7MHz GBW. DigiKey: ADA4522-2ARZ-ND |
 | Isolated-side DAC LDO | (missing) | **TLV70450DBVR** | MCP4922 DAC sits on isolated side, needs 5V. Taps +15V rail. 24V input, 5V/150mA, SOT-23-5. DigiKey: TLV70450DBVRCT-ND |
-| Digital Isolators | SI8622EC-B-IS ×N | **2× SI8641EC-B-IS + 1× SI8622EC-B-IS** | 10 signals cross the barrier (8 unidirectional + 2 bidirectional). SI8641EC = 4-ch unidirectional (3750Vrms). SI8622EC = 2-ch bidirectional for fault/heartbeat. |
+| Digital Isolators | SI8622EC-B-IS ×N | **1× SI8380P-IU + 1× SI8622EC-B-IS** | 10 signals cross the barrier (8 forward + 2 bidirectional). SI8380P-IU = 8-ch all-forward (QSOP-20, push-pull, 2500Vrms) — all SPI + H-bridge signals. SI8622EC = 2-ch bidirectional for heartbeat/fault. 2 ICs total (was 3). |
 | USB charging interlock | (missing) | **BSS138 N-MOSFET** | VBUS present → BSS138 pulls TPS61023 EN LOW → boost OFF → ±15V OFF → hardware-only stimulation lockout during charging |
 | Current source topology | Howland current pump | **V-to-I converter** | V-to-I more stable into varying electrode impedance. Rsense inherently stabilizes the feedback loop. |
 | H-Bridge | A4950ELJTR-T (40V) | **DRV8871DDAR** | 45V operating / 50V abs max. Integrated IPROPI current sense used for impedance monitoring. SOIC-8 PowerPAD. DigiKey: 296-43024-1-ND |
-| DC-blocking cap | ECQ-E2475KF (250V, 26mm TH) | **TDK C3216X7R1H106K160AB** | 250V massively overrated (cap sees ≤13V). Replacement: 10µF/50V/1206 SMD. 700× smaller. DigiKey: 445-7659-1-ND |
-| Current sense resistor | YR1B100RCC (axial TH) | **Susumu RG2012P-101-B-T5** | Same value (100Ω/0.1%/10PPM) in 0805 thin-film SMD. DigiKey: RG2012P-101-B-T5CT-ND |
+| DC-blocking cap | ECQ-E2475KF (250V, 26mm TH) | **Samsung CL31B106KBHNNNE** | 250V massively overrated (cap sees ≤13V). Replacement: 10µF/50V/X7R/1206 SMD. 700× smaller. 1/10 price of TDK equivalent. Source: LCSC/Mouser |
+| Current sense resistor | YR1B100RCC (axial TH) | **Susumu RG2012P-101-B-T5** | Same value (100Ω/0.1%/25PPM) in 0805 thin-film SMD. AEC-Q200. DigiKey: RG2012P-101-B-T5CT-ND |
 | DAC package | MCP4922-E/P (PDIP-14) | **MCP4922-E/SL (SOIC-14)** | Through-hole PDIP not suitable for final SMD PCB. Identical electrically. DigiKey: MCP4922-E/SL-ND |
 | BLE Library | NimBLE-Arduino 2.3.x | **NimBLE-Arduino ≥2.4.0** (use 2.5.0) | 2.3.x has regression breaking ESP32-S3 dual-role BLE (peripheral + central simultaneously) |
 | Timer API | Arduino-ESP32 2.x style | **Arduino-ESP32 3.x API** | Timer API changed in 3.x. Old tutorials will compile but behave incorrectly. Use RepeatTimer example. |
@@ -50,8 +50,8 @@ These constraints are absolute. Never remove, bypass, or defer them.
 ```
 Patient ←→ [DC-Block Caps 10µF/50V] ←→ [Galvanic Isolation Barrier] ←→ [ESP32 + DAC]
               ↕                                    ↕
-        [Hardware overcurrent]        [2× SI8641EC-B-IS + 1× SI8622EC-B-IS isolators]
-        [PPTC 10mA + LM393 latch]    [B0515D-1WR3 isolated DC-DC, 1500VDC]
+        [Hardware overcurrent]        [1× SI8380P-IU (8-ch forward) + 1× SI8622EC-B-IS (2-ch bidi)]
+        [PPTC 10mA + LM339 latch]    [PCN1-S5-D15-M-TR isolated DC-DC, 1500VDC]
         [DRV8871 IPROPI contact check] [BSS138 USB charging interlock]
         [Heartbeat watchdog latch]
 ```
@@ -62,7 +62,7 @@ Patient ←→ [DC-Block Caps 10µF/50V] ←→ [Galvanic Isolation Barrier] ←
 - **Charge density limit:** 30 µC/cm² per phase (McCreery 1990). At 5mA × 500µs = 2.5 µC/cm² — 12× safety margin
 - **No stimulation while USB charging** — BSS138 + TPS61023 EN pin — hardware-only, firmware cannot override
 - **Emergency cut-off** — hardware-level, not firmware-only
-- **Electrode contact detection** — DRV8871 IPROPI + LM393 comparator. Abort if Z > 10kΩ or Z < 100Ω. **Must be implemented before any human use.**
+- **Electrode contact detection** — DRV8871 IPROPI + LM339 comparator. Abort if Z > 10kΩ or Z < 100Ω. **Must be implemented before any human use.**
 - **Low-battery lockout** — refuse to start if VBAT < 3.2V; ramp down and stop if VBAT < 3.0V mid-session
 - **DRV8871 VREF** — must be tied to VCC to disable internal current limiting. Two active current loops will fight and oscillate.
 
@@ -193,8 +193,9 @@ Tongue-palate/parafunctional research: **`.planning/research/TONGUE-PALATE.md`**
 **Key distributor assignments:**
 | Source | Parts |
 |--------|-------|
-| DigiKey | ADA4522-2ARZ, DRV8871DDAR, TPS61023DRLR, TLV70450DBVR, SI8641EC-B-IS, SI8622EC-B-IS, MCP4922-E/SL, Susumu RG2012P-101-B-T5, TDK C3216X7R1H106K160AB, SMD0603B001TF |
-| LCSC/AliExpress | ME6211C33M5G, B0515D-1WR3, TP4056X, BSS138, passives (0402/0603/0805), LiPo battery |
+| DigiKey | ADA4522-2ARZ, DRV8871DDAR, TLV70450DBVR, SI8380P-IU, SI8622EC-B-IS, MCP4922-E/SL, Susumu RG2012P-101-B-T5, SMD0603B001TF, BSS138, LM339DR |
+| LCSC/AliExpress | ME6211C33M5G, TP4056X, Samsung CL31B106KBHNNNE, passives (0402/0603/0805), LiPo battery |
+| Mouser/CUI | PCN1-S5-D15-M-TR, TPS61023 (SOT-563) |
 
 ---
 

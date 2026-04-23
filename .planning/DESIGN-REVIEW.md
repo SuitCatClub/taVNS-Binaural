@@ -13,10 +13,10 @@ Before addressing the 10 design issues, two corrections from existing project re
 
 | Item | You Wrote | Correction | Source |
 |------|-----------|------------|--------|
-| Isolated DC-DC | TMA 0515D (1kV isolation) | **B0515D-1WR3** (Mornsun, 1500VDC, SIP-7, ~$3) | AGENTS.md corrected decision |
+| Isolated DC-DC | TMA 0515D (1kV isolation) | **PCN1-S5-D15-M-TR** (CUI, 1500VDC, SMD-8, dual ±15V) | AGENTS.md corrected decision → BOM validation replaced B0515D-1WR3 |
 | Op-amp in AGENTS.md | OPA388 | OPA388 max supply = 5.5V — same problem as AD8628. Needs replacement. | See §4 below |
 
-The rest of this review uses **B0515D-1WR3** as the isolated DC-DC. The TMA 0515D is inferior (1kV vs 1500V) and more expensive.
+The rest of this review uses **PCN1-S5-D15-M-TR** as the isolated DC-DC (replaced B0515D-1WR3 during BOM validation — B0515D dual output could not be confirmed, PCN1 is SMD with confirmed dual ±15V and 1500VDC isolation).
 
 ---
 
@@ -73,7 +73,7 @@ A single-cell LiPo (3.0–4.2V) does not match ANY standard isolated DC-DC input
 | **Package** | SOT-5 (1.6×1.6mm) |
 | **DigiKey** | TPS61023DRLR, ~$0.75 |
 
-**Why this specific part:** The 4MHz switching frequency is the decisive factor. At 4MHz, output ripple is 10–20× lower than 300–600kHz alternatives for the same output capacitor. The B0515D-1WR3 sees clean 5V input with minimal switching content coupling through to the ±15V analog rails.
+**Why this specific part:** The 4MHz switching frequency is the decisive factor. At 4MHz, output ripple is 10–20× lower than 300–600kHz alternatives for the same output capacitor. The PCN1-S5-D15-M-TR sees clean 5V input with minimal switching content coupling through to the ±15V analog rails.
 
 **Alternate:** TPS61230DRCR (600mA, ~2–3MHz, WSON-10 3×3mm) if more current headroom needed.
 
@@ -85,45 +85,45 @@ LiPo (3.0–4.2V, 2000mAh)
     ├──► ME6211C33M5G (LDO, 100mV dropout) ──► 3.3V DIGITAL RAIL
     │    SOT-23-5                                 │
     │    Cin: 1µF, Cout: 1µF                      ├── ESP32-S3 (~150mA avg)
-    │                                              ├── MCP4922 DAC (on digital side — see note)
+    │                                              ├── SI8380P-IU digital side VDD1
     │                                              └── SI8622EC digital side VDD1
     │
-    └──► TPS61023DRLR (boost) ──► 5.0V BOOST RAIL
-         SOT-5                        │
-         L1: 2.2µH, Cout: 22µF X5R   ├── SI8622EC digital side VDD1 (if 5V-tolerant config)
-         EN ← GPIO (LOW during USB)   │
-                                      └──► B0515D-1WR3 (isolated DC-DC) ──► ±15V ISOLATED RAIL
-                                           SIP-7, 1W, 1500VDC isolation        │
-                                           Cin: 47µF elec + 100nF ceramic      ├── +15V: 100µF + 100nF + 1nF
-                                           Cout: 47µF + 10nF per rail          ├── -15V: 100µF + 100nF + 1nF
-                                                                               ├── GND_ISO (floating)
-                                                                               │
-                                                     ══════ ISOLATION BARRIER ══════
-                                                                               │
-                                                                        PATIENT DOMAIN
-                                                                               │
-                                                                    ±15V powers:
-                                                                    ├── ADA4522-2ARZ (error amp)
-                                                                    ├── 2× DRV8871DDAR (H-bridges)
-                                                                    ├── MCP4922 DAC (on isolated side)
-                                                                    ├── SI8622EC isolated side VDD2
-                                                                    └── LM393 comparators
+    └──► TPS61023 (boost) ──► 5.0V BOOST RAIL
+         SOT-563                      │
+         L1: 2.2µH, Cout: 22µF X5R   │
+         EN ← BSS138 (LOW during USB) └──► PCN1-S5-D15-M-TR (isolated DC-DC) ──► ±15V ISOLATED RAIL
+                                           SMD-8, 1W, 1500VDC isolation           │
+                                           Cin: 47µF elec + 100nF ceramic         ├── +15V: 100µF + 100nF + 1nF
+                                           Cout: 47µF + 10nF per rail             ├── -15V: 100µF + 100nF + 1nF
+                                                                                  ├── GND_ISO (floating)
+                                                                                  │
+                                                        ══════ ISOLATION BARRIER ══════
+                                                                                  │
+                                                                           PATIENT DOMAIN
+                                                                                  │
+                                              TLV70450DBVR (+15V → 5V isolated) ──► 5V_ISO RAIL
+                                                                                  │
+                                                                    ±15V powers:  │ 5V_ISO powers:
+                                                                    ├── ADA4522-2ARZ  ├── MCP4922 DAC
+                                                                    ├── 2× DRV8871   ├── SI8380P-IU VDD2
+                                                                    │                 ├── SI8622EC VDD2
+                                                                    └── LM339DR       └── LM339DR VCC
 ```
 
 ### Noise Mitigation at Boost Output
 
-Add between TPS61023 output and B0515D-1WR3 input:
+Add between TPS61023 output and PCN1-S5-D15-M-TR input:
 1. **CM choke:** Würth 744232601 (600Ω @ 100MHz) in series with 5V line
-2. **Input decoupling:** 47µF electrolytic + 100nF ceramic at B0515D Vin pin
-3. **Output decoupling:** 47µF + 10nF on each ±15V rail (Mornsun datasheet recommendation)
+2. **Input decoupling:** 47µF electrolytic + 100nF ceramic at PCN1 Vin pin
+3. **Output decoupling:** 47µF + 10nF on each ±15V rail (CUI datasheet recommendation)
 
 ### Power Budget
 
 | Consumer | Current from 5V boost rail |
 |----------|---------------------------|
 | ESP32-S3 (via ME6211 3.3V LDO) | ~50mA (3.3V×150mA / 5V×0.93) |
-| B0515D-1WR3 (1W isolated DC-DC at 80% eff) | ~250mA |
-| SI8622EC digital isolators | ~15mA |
+| PCN1-S5-D15-M-TR (1W isolated DC-DC at 78% eff) | ~256mA |
+| SI8380P-IU + SI8622EC digital isolators | ~16mA |
 | Boost converter overhead | ~10mA |
 | Status LED | ~5mA |
 | **Total from LiPo (via boost)** | **~330mA at 3.7V** |
@@ -206,8 +206,8 @@ From ARCHITECTURE.md §2.5 (confirmed and updated):
 | DC-blocking cap (10µF) | **Independent** | 1 per channel | **2** (+ 2 spare on BOM) |
 | 1MΩ bleed resistor | **Independent** | 1 per channel | **2** |
 | PPTC fuse (10mA) | **Independent** | 1 per channel | **2** |
-| LM393 comparator + latch | **Independent** | 1 per channel | **2** (or 1× LM393 dual + external latch) |
-| B0515D-1WR3 DC-DC | **Shared** | — | **1** |
+| LM339 comparator + latch | **Independent** | 1 per channel | **1× LM339DR quad** (ch1+ch2: overcurrent, ch3: watchdog, ch4: spare) |
+| PCN1-S5-D15-M-TR DC-DC | **Shared** | — | **1** |
 | TPS61023DRLR boost | **Shared** | — | **1** |
 | ME6211C33M5G LDO | **Shared** | — | **1** |
 | ESP32-S3 | **Shared** | — | **1** |
@@ -233,9 +233,16 @@ Signals crossing the isolation barrier:
 SI8622EC-B-IS = 2 channels (1 forward + 1 reverse). For 10 channels:
 - **Option A:** 5× SI8622EC-B-IS (10 channels) — more ICs but all bidirectional
 - **Option B:** 2× SI8642EC (4-ch unidirectional, Skyworks) + 1× SI8622EC (for bidirectional fault flag) = 3 ICs for 10 channels
-- **Option C (recommended):** 2× SI8641EC-B-IS (4-ch, A→B direction) + 1× SI8622EC-B-IS (2-ch bidirectional for fault + heartbeat) = **3 ICs, 10 channels**
+- **Option C:** 2× SI8641EC-B-IS (4-ch, 3+1 direction) + 1× SI8622EC-B-IS (2-ch bidirectional) = **3 ICs, 10 channels**
+- **Option D (recommended):** 1× SI8380P-IU (8-ch, all forward) + 1× SI8622EC-B-IS (1 forward + 1 reverse) = **2 ICs, 10 channels**
 
-**Recommended: 2× SI8641EC-B-IS + 1× SI8622EC-B-IS = 3 isolator ICs total**
+**Recommended: 1× SI8380P-IU + 1× SI8622EC-B-IS = 2 isolator ICs total**
+
+Signal assignment:
+- SI8380P-IU → SPI SCK, SPI MOSI, SPI CS, LDAC, H-bridge IN1_A, IN2_A, IN1_B, IN2_B (8 forward)
+- SI8622EC-B-IS → Heartbeat watchdog (forward) + Fault flag (reverse) (2 channels)
+
+Advantage over Option C: one fewer IC, no 3+1 channel-split ambiguity, all control signals in one package, simpler PCB routing, push-pull outputs (no pull-up resistors on isolated side).
 
 ### Complete Binaural Component Count Table
 
@@ -244,13 +251,13 @@ SI8622EC-B-IS = 2 channels (1 forward + 1 reverse). For 10 channels:
 | U1 | ESP32-S3 module | ESP32-S3-WROOM-1-N16R8 | 1 | MCU |
 | U2 | Boost converter | TPS61023DRLR | 1 | LiPo → 5V |
 | U3 | 3.3V LDO | ME6211C33M5G | 1 | LiPo → 3.3V |
-| U4 | Isolated DC-DC | B0515D-1WR3 | 1 | 5V → ±15V |
+| U4 | Isolated DC-DC | PCN1-S5-D15-M-TR | 1 | 5V → ±15V |
 | U5 | Dual DAC | MCP4922-E/SL | 1 | 12-bit, SOIC-14 |
 | U6 | Error amp (dual) | ADA4522-2ARZ | 1 | V-to-I, both channels |
 | U7, U8 | H-bridge | DRV8871DDAR | **2** | 1 per channel |
-| U9, U10 | 4-ch isolator | SI8641EC-B-IS | **2** | SPI + H-bridge control |
-| U11 | 2-ch isolator | SI8622EC-B-IS | 1 | Fault + heartbeat |
-| U12 | Dual comparator | LM393DR | 1 | Overcurrent (both channels) |
+| U9 | 8-ch isolator (all forward) | SI8380P-IU | **1** | SPI + H-bridge control (all 8 forward signals) |
+| U10 | 2-ch isolator (bidirectional) | SI8622EC-B-IS | 1 | Heartbeat (forward) + Fault flag (reverse) |
+| U12 | Quad comparator | LM339DR | 1 | Overcurrent (both channels) + heartbeat watchdog + spare |
 | U13 | LiPo charger | TP4056X | 1 | USB-C charging |
 | R_S1, R_S2 | Sense resistor | Susumu RG2012P-101-B-T5 | **2** | 100Ω 0.1% 10PPM, 0805 |
 | R_B1, R_B2 | Bleed resistor | Generic 1MΩ 1% 0805 | **2** | Across DC-block caps |
@@ -264,7 +271,7 @@ SI8622EC-B-IS = 2 channels (1 forward + 1 reverse). For 10 channels:
 | J1 | USB-C connector | Generic USB-C 2.0 | 1 | Charging only |
 | SW1 | Emergency stop | Tactile NO switch | 1 | Hardware kill |
 
-**Total active ICs: 13** | **Total unique SMD component types: ~25** | **Total components: ~70**
+**Total active ICs: 12** | **Total unique SMD component types: ~25** | **Total components: ~65**
 
 ---
 
@@ -347,7 +354,7 @@ Could 1µF work?
 |-----------|----------------------|--------------------------------------|
 | Resistance | 100Ω | 100Ω |
 | Tolerance | 0.1% | **0.1%** ✅ |
-| TCR | 15 PPM/°C | **10 PPM/°C** (better) |
+| TCR | 15 PPM/°C | **25 PPM/°C** (adequate — see analysis) |
 | Package | Axial through-hole | **0805 SMD** |
 | Technology | Metal film | **Thin film** (superior stability) |
 | Power | 250mW | 125mW (0805) — adequate: P = 5mA² × 100Ω = 2.5mW |
@@ -356,8 +363,8 @@ Could 1µF work?
 **Error analysis:**
 ```
 Tolerance: ±0.1% of 100Ω = ±0.1Ω → at 5mA: ±5µA (0.1%) — excellent
-TCR at ΔT=20°C: 10PPM × 20°C × 100Ω = 0.02Ω → ±1µA — negligible
-Total current uncertainty: ±6µA at 5mA = ±0.12%
+TCR at ΔT=20°C: 25PPM × 20°C × 100Ω = 0.05Ω → ±2.5µA — negligible
+Total current uncertainty: ±7.5µA at 5mA = ±0.15%
 ```
 
 **Alternate (if Susumu unavailable):** Vishay TNPW0805100RBEEA (0.1%, 25 PPM/°C, 0805)
@@ -378,7 +385,7 @@ Total current uncertainty: ±6µA at 5mA = ±0.12%
 The MCP4922 DAC should be on the **isolated (patient) side** of the barrier, not the digital side. Reason:
 
 - If DAC is on digital side: analog voltage must cross the isolation barrier → requires analog isolator (expensive, adds noise)
-- If DAC is on isolated side: only digital SPI signals cross the barrier → handled by SI8641 digital isolator ✅
+- If DAC is on isolated side: only digital SPI signals cross the barrier → handled by SI8380P-IU digital isolator ✅
 
 The MCP4922 runs from 2.7V–5.5V. On the isolated side, power it from **+5V derived from the +15V rail via a small LDO** (e.g., TLV70450DBVR, 24V input, 5V fixed output, SOT-23-5). This LDO serves ONLY the DAC — the op-amp runs directly from ±15V.
 
@@ -503,11 +510,11 @@ DAC write:                   ↑ here (settles in 4.5µs)
 
 ## 9. Isolation Compliance (IMPORTANT 8)
 
-### 🟡 IMPORTANT 8: TMA → B0515D-1WR3 Isolation — RESOLVED
+### 🟡 IMPORTANT 8: TMA → PCN1-S5-D15-M-TR Isolation — RESOLVED
 
 The question: does the DC-DC converter isolation independently matter for IEC 60601-1 Type BF?
 
-**Answer: Yes, but B0515D-1WR3 already meets the requirement.**
+**Answer: Yes, but PCN1-S5-D15-M-TR already meets the requirement.**
 
 #### IEC 60601-1 Type BF Requirements (Battery-Powered)
 
@@ -515,7 +522,7 @@ For a battery-powered Type BF applied part, the key requirement is **Means of Pa
 
 | Parameter | IEC 60601-1 Requirement | Our Design |
 |-----------|------------------------|------------|
-| Patient isolation (DC) | **1500V DC** (1 MOPP for battery device) | B0515D-1WR3: **1500VDC** ✅ |
+| Patient isolation (DC) | **1500V DC** (1 MOPP for battery device) | PCN1-S5-D15-M-TR: **1500VDC** ✅ |
 | Creepage distance | ≥4mm (reinforced) | PCB layout dependent — design for ≥6mm |
 | Clearance | ≥4mm (reinforced) | PCB layout dependent — design for ≥6mm |
 | Patient leakage current | ≤100µA (normal), ≤500µA (single fault) | Battery-isolated, ~pA leakage |
@@ -524,15 +531,16 @@ For a battery-powered Type BF applied part, the key requirement is **Means of Pa
 
 | Component | Isolation Rating | Role |
 |-----------|-----------------|------|
-| B0515D-1WR3 | **1500VDC** | Power transfer across barrier |
-| SI8622EC-B-IS | **3750Vrms (~5300Vpk)** | Signal transfer across barrier |
+| PCN1-S5-D15-M-TR | **1500VDC** | Power transfer across barrier |
+| SI8380P-IU | **2500Vrms (~3535Vpk)** | Signal transfer across barrier (8 forward) |
+| SI8622EC-B-IS | **3750Vrms (~5300Vpk)** | Signal transfer across barrier (heartbeat + fault) |
 | DC-blocking caps | **50V** (not an isolation component) | DC-blocking only |
 
-**The isolation barrier is defined by the WEAKEST link: B0515D-1WR3 at 1500VDC.** The SI8622 at 3750Vrms exceeds this, so it's not the limiting factor.
+**The isolation barrier is defined by the WEAKEST link: PCN1-S5-D15-M-TR at 1500VDC.** Both digital isolators exceed this, so they are not the limiting factor.
 
 **1500VDC meets the 1 MOPP requirement for battery-powered Type BF.** No issue.
 
-> ⚠️ **If you want 2 MOPP (reinforced insulation for higher safety factor):** replace B0515D-1WR3 with XP Power **IH0515SH** (3000–6000VDC isolation, same SIP-7 footprint, drop-in replacement, ~$10). This is a documentation/certification consideration, not a functional one.
+> ⚠️ **If you want 2 MOPP (reinforced insulation for higher safety factor):** would require an isolated DC-DC with ≥3000VDC isolation rating. Not pursued — 1 MOPP is the correct requirement for battery-powered Type BF, and finding a dual ±15V SMD part with >1500VDC was already difficult.
 
 > ⚠️ **PCB layout is critical:** The isolation barrier must be maintained in the PCB with adequate creepage/clearance distances. A 1500V-rated component on a PCB with 1mm trace spacing defeats the purpose. Design the isolation zone with a **routed slot** (milled gap) in the PCB between digital and patient domains, minimum 6mm width.
 
@@ -548,7 +556,7 @@ For a battery-powered Type BF applied part, the key requirement is **Means of Pa
 |-----|-------------|-----|---------|-----|-----------|-------------|
 | U2 | Boost LiPo→5V | **TPS61023DRLR** | SOT-5 | 1 | 296-43XXX | $0.75 |
 | U3 | LDO LiPo→3.3V | **ME6211C33M5G** | SOT-23-5 | 1 | — (LCSC) | $0.20 |
-| U4 | Isolated DC-DC 5V→±15V | **B0515D-1WR3** | SIP-7 | 1 | — (LCSC) | $3.00 |
+| U4 | Isolated DC-DC 5V→±15V | **PCN1-S5-D15-M-TR** | SMD-8 | 1 | — (CUI/Mouser) | $5.00 |
 | U14 | LDO +15V→5V (DAC power) | **TLV70450DBVR** | SOT-23-5 | 1 | TLV70450DBVRCT-ND | $0.65 |
 | L1 | Boost inductor 2.2µH | **Würth 744043002** | 1210 | 1 | 732-1216-1-ND | $0.50 |
 | FB1 | CM choke (noise filter) | **Würth 744232601** | 0805 | 1 | 732-1622-1-ND | $0.80 |
@@ -563,7 +571,7 @@ For a battery-powered Type BF applied part, the key requirement is **Means of Pa
 | U6 | Dual zero-drift error amp | **ADA4522-2ARZ** | SOIC-8 | 1 | ADA4522-2ARZ-ND | $5.00 |
 | U7, U8 | H-bridge driver | **DRV8871DDAR** | SOIC-8 PP | **2** | 296-43024-1-ND | $2.50 |
 | R_S1, R_S2 | Sense resistor 100Ω 0.1% | **Susumu RG2012P-101-B-T5** | 0805 | **2** | RG2012P-101-B-T5CT-ND | $1.20 |
-| C_DC1, C_DC2 | DC-blocking cap 10µF 50V | **TDK C3216X7R1H106K160AB** | 1206 | **2** | 445-7659-1-ND | $0.15 |
+| C_DC1, C_DC2 | DC-blocking cap 10µF 50V | **Samsung CL31B106KBHNNNE** | 1206 | **2** | — (LCSC/Mouser) | $0.02 |
 | R_B1, R_B2 | Bleed resistor 1MΩ 1% | Generic 0805 | 0805 | **2** | — | $0.02 |
 | F1, F2 | PPTC fuse 10mA/30mA | **SMD0603B001TF** | 0603 | **2** | 13-SMD0603B001TFCT-ND | $0.30 |
 | C_F1, C_F2 | Feedback cap 10nF C0G | Generic 0805 C0G 50V | 0805 | **2** | — | $0.05 |
@@ -572,14 +580,14 @@ For a battery-powered Type BF applied part, the key requirement is **Means of Pa
 
 | Ref | Description | MPN | Package | Qty | DigiKey PN | ~Unit Price |
 |-----|-------------|-----|---------|-----|-----------|-------------|
-| U9, U10 | 4-ch digital isolator | **SI8641EC-B-IS** | SOIC-16 | **2** | 336-3878-ND | $3.50 |
-| U11 | 2-ch bidirectional isolator | **SI8622EC-B-IS** | SOIC-8 | 1 | 336-1750-ND | $3.00 |
+| U9 | 8-ch digital isolator (all forward) | **SI8380P-IU** | QSOP-20 | **1** | — (Skyworks/Mouser) | ~$3.50 |
+| U10 | 2-ch bidirectional isolator | **SI8622EC-B-IS** | SOIC-8 | 1 | 336-1750-ND | $3.00 |
 
 #### Safety
 
 | Ref | Description | MPN | Package | Qty | DigiKey PN | ~Unit Price |
 |-----|-------------|-----|---------|-----|-----------|-------------|
-| U12 | Dual comparator (overcurrent) | **LM393DR** | SOIC-8 | 1 | 296-1015-1-ND | $0.40 |
+| U12 | Quad comparator (overcurrent + watchdog) | **LM339DR** | SOIC-14 | 1 | 296-1393-1-ND | $0.50 |
 | SW1 | Emergency stop button | Generic tactile NO | Through-hole | 1 | — | $0.50 |
 
 #### MCU
@@ -661,7 +669,7 @@ USB VBUS (5V) ──► voltage divider ──► GPIO (VBUS_DETECT)
                                        │
                                        └──► AND gate with TPS61023 EN pin:
                                             EN = LOW when VBUS present
-                                            Result: boost converter OFF → B0515D OFF → ±15V OFF
+                                            Result: boost converter OFF → PCN1 OFF → ±15V OFF
                                             → physically impossible to stimulate while charging
 ```
 
@@ -679,7 +687,7 @@ The isolated side must have a way to detect if the ESP32 has crashed. Solution f
 - On isolated side: RC detector (τ ≈ 50ms) + comparator
 - If heartbeat stops for >50ms (ESP32 crash, BLE lockup, etc.): comparator output goes LOW → kills analog power enable → all stimulation stops
 
-This requires one additional comparator — the LM393DR has 2 channels, one per overcurrent channel. **Add a third comparator (e.g., LM311DR, SOIC-8) or use a TLV1701 (SOT-23-5, single) for the heartbeat detector.**
+This requires one additional comparator — ~~the LM393DR has 2 channels, one per overcurrent channel.~~ **RESOLVED: LM339DR (quad comparator, SOIC-14) replaces LM393DR.** Channels: (1) overcurrent A, (2) overcurrent B, (3) heartbeat watchdog, (4) spare (electrode contact detection).
 
 ### ⚠️ NEW ISSUE E: OPA388 in AGENTS.md Is Wrong
 
@@ -697,12 +705,12 @@ AGENTS.md §2 lists OPA388 as the correct op-amp for V-to-I converter. However:
 |-------|-----------|---------------|
 | 🔴 Boost converter | TPS61023DRLR (2.0–5.5V→5V, 500mA, SOT-5) | Add to BOM |
 | 🔴 AD8628 supply | Replace with **ADA4522-2ARZ** (±27.5V, zero-drift, dual) | Swap in BOM |
-| 🟡 Binaural arch | 2× DRV8871, 1× ADA4522-2 (dual), 1× MCP4922 (dual), 3× isolators | Explicit count above |
-| 🟡 DC-block cap | **TDK C3216X7R1H106K160AB** (10µF, 50V, 1206) | Replace ECQ-E2475KF |
-| 🟡 Sense resistor | **Susumu RG2012P-101-B-T5** (100Ω, 0.1%, 10PPM, 0805) | Replace YR1B100RCC |
+| 🟡 Binaural arch | 2× DRV8871, 1× ADA4522-2 (dual), 1× MCP4922 (dual), 2× isolators | Explicit count above |
+| 🟡 DC-block cap | **Samsung CL31B106KBHNNNE** (10µF, 50V, 1206) | Replace ECQ-E2475KF |
+| 🟡 Sense resistor | **Susumu RG2012P-101-B-T5** (100Ω, 0.1%, 25PPM, 0805) | Replace YR1B100RCC |
 | 🟡 DAC package | **MCP4922-E/SL** (SOIC-14) | Replace PDIP-14 |
 | 🟡 Loop stability | Stable — Rsense provides inherent compensation. Add 10nF across Rsense. | No topology change |
-| 🟡 Isolation level | B0515D-1WR3 = 1500VDC → meets 1 MOPP. Upgrade to IH0515SH for 2 MOPP. | Already correct |
+| 🟡 Isolation level | PCN1-S5-D15-M-TR = 1500VDC → meets 1 MOPP. | Already correct |
 | NEW: DAC power | **TLV70450DBVR** LDO (+15V→5V, isolated side) for MCP4922 | Add to BOM |
 | NEW: DRV8871 VREF | Tie to VCC — disable internal current limit | Layout/design note |
 | NEW: USB interlock | BSS138 + TPS61023 EN pin — hardware-only lockout | Add to schematic |
@@ -712,12 +720,16 @@ AGENTS.md §2 lists OPA388 as the correct op-amp for V-to-I converter. However:
 
 ## 13. Open Items for PCB Layout Phase
 
-1. **Isolation slot:** Route a milled slot in the PCB between digital and patient domains. Minimum 6mm width. All crossing signals/power through the slot area only.
-2. **Ground planes:** Separate GND_DIGITAL and GND_ISO copper pours. Connect ONLY through B0515D-1WR3 isolation.
-3. **DRV8871 thermal pad:** SOIC-8 PowerPAD needs vias to internal copper pour for heat dissipation (even at 5mA, good practice).
-4. **Analog layout:** Keep DAC output traces short, away from switching signals. Route Rsense feedback as a Kelvin connection (4-wire sense).
-5. **SPI routing:** SPI traces on digital side → through isolators → to DAC on patient side. Keep SPI clock and data parallel-routed for impedance matching at 20MHz.
+1. **Isolation slot:** Route a milled slot in the PCB between digital and patient domains. Minimum 6mm width. Narrow to ~3mm only under isolation ICs (SI8380P-IU, SI8622EC, PCN1-S5-D15-M-TR) where internal IC isolation supplements PCB creepage.
+2. **Ground planes:** Separate GND_DIGITAL and GND_ISO copper pours. Connect ONLY through PCN1-S5-D15-M-TR isolation.
+3. **Barrier component placement:** All three barrier-crossing components (PCN1-S5-D15-M-TR, SI8380P-IU, SI8622EC-B-IS) placed in a line along the isolation slot. PCN1 pad groups must align with slot (CUI datasheet specifies ~5mm input-to-output pad gap).
+4. **DRV8871 thermal pad:** SOIC-8 PowerPAD needs vias to internal copper pour for heat dissipation (even at 5mA, good practice). Same for TP4056X ESOP exposed pad.
+5. **Analog layout:** Keep DAC output traces short, away from switching signals. Route Rsense feedback as a Kelvin connection (4-wire sense).
+6. **SPI routing:** SPI traces on digital side → through SI8380P-IU → to DAC on patient side. Keep SPI clock and data parallel-routed. No impedance matching needed at 1 MHz (SI8380P-IU limit: 2 Mb/s).
+7. **Patient-side placement order:** SI8380P-IU outputs → MCP4922 (close) → ADA4522-2ARZ → DRV8871s → Rsense → DC-block → PPTC → electrode connectors (board edge). LM339DR adjacent to DRV8871s for short IPROPI traces.
+8. **4-layer stackup:** L1=signal+components, L2=GND (split at barrier), L3=power (split: 3.3V/5V digital | ±15V/5V_iso patient), L4=signal+routing.
+9. **Boost converter (TPS61023):** Keep SW node trace short and shielded with ground pour. Input cap directly at VIN pin. Design for ~4 MHz switching frequency (verify from TI datasheet — distributor listing showed 1 MHz which may be an error).
 
 ---
 
-*End of design review. All 10 original issues resolved. 5 new issues identified and addressed. BOM complete at ~$77 for full 2-channel build.*
+*End of design review. All 10 original issues resolved. 5 new issues identified and addressed. BOM complete at ~$77 for full 2-channel build. Updated 2026-04-23: SI8380P-IU replaces 2× SI8641EC, LM339DR replaces LM393DR, PCN1-S5-D15-M-TR replaces B0515D-1WR3, Samsung CL31B106KBHNNNE replaces TDK C3216X7R1H106K160AB, Susumu TCR corrected to 25PPM, PCB layout notes expanded.*
